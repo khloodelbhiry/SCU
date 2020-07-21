@@ -1,0 +1,652 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>SCU</title>
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="App_Themes/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="App_Themes/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <script src="App_Themes/js/html5-trunk.js"></script>
+    <link rel="stylesheet" href="App_Themes/css/fonts.googleapis.com.css" />
+    <link rel="stylesheet" href="App_Themes/css/ace.min.css" class="ace-main-stylesheet" />
+    <link href="App_Themes/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="App_Themes/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="App_Themes/css/ace-skins.min.css" />
+    <script src="App_Themes/js/jquery-2.1.4.min.js"></script>
+    <script src="App_Themes/js/ace-extra.min.js"></script>
+    <link href="App_Themes/css/StyleSheet.css" rel="stylesheet" />
+    <style>
+        .form-control {
+            direction: rtl !important;
+            float: right !important;
+        }
+
+        th {
+            text-align: center !important;
+        }
+    </style>
+    <script>var units;</script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body class="skin-2 rtl">
+    <form id="form1" runat="server" enctype="multipart/form-data">
+        <asp:ScriptManager ID="ScrMang" runat="server" ScriptMode="Release"></asp:ScriptManager>
+        <div>
+            <div runat="server" id="navbar" class=" navbar navbar-default  ace-save-state">
+                <div class="navbar-container ace-save-state" id="navbar-container">
+                    <button type="button" class="navbar-toggle menu-toggler " id="menu-toggler" data-target="#sidebar">
+                        <span class="sr-only">Toggle sidebar</span>
+
+                        <span class="icon-bar"></span>
+
+                        <span class="icon-bar"></span>
+
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <div runat="server" id="FD" class="navbar-header pull-right">
+                        <a href="index.html" class="navbar-brand">
+                            <small>
+                                <i id="iconLogo" runat="server" class="fa fa-database"></i>
+                                <asp:Label ID="lblLogo" runat="server">المجلس الأعلى للجامعات</asp:Label>
+                            </small>
+                        </a>
+                    </div>
+                    <div class="navbar-buttons navbar-header pull-left" role="navigation">
+                        <ul class="nav ace-nav">
+                            <li class="purple dropdown-modal hidden">
+                                <a href="productivity.aspx">
+                                    <i class="ace-icon fa fa-cog fa-spin"></i>
+                                </a>
+                            </li>
+                            <li class="light-blue dropdown-modal">
+                                <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                                    <img class="nav-user-photo" runat="server" src="App_Themes/images/avatars/profile-pic.jpg" alt="User's Avatar" id="avatar" onerror="this.src='App_Themes/images/avatars/profile-pic.jpg'" />
+                                    <small>مرحبا، </small>
+                                    <asp:Literal ID="ltUsername" runat="server"></asp:Literal>
+                                    <i class="ace-icon fa fa-caret-down"></i>
+                                </a>
+                                <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                                    <li>
+                                        <a href="#" runat="server" id="lnkChangePassword" onserverclick="lnkChangePassword_ServerClick">
+                                            <i class="ace-icon fa fa-lock"></i>
+                                            تغير كلمة السر
+                                        </a>
+                                    </li>
+
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a id="lnkLogout" runat="server" onserverclick="lnkLogout_ServerClick">
+                                            <i class="ace-icon fa fa-power-off"></i>
+                                            تسجيل خروج
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <asp:HiddenField ID="hdfProject" runat="server" />
+                <asp:ModalPopupExtender ID="mpeProject" TargetControlID="hdfProject" BackgroundCssClass="modal modal-st-erorr" PopupControlID="pnlProject" runat="server" DynamicServicePath="" Enabled="True">
+                </asp:ModalPopupExtender>
+                <asp:Panel ID="pnlProject" runat="server" CssClass="index" Style="display: none">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 style="text-align: right; margin: 0px;">
+                                    <asp:LinkButton ID="lnkClosePoject" runat="server" Text="إغلاق" class="pull-left" OnClick="lnkClosePoject_Click" meta:resourcekey="btnCloseResource1"></asp:LinkButton></h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4">كلمة السر القديمة</label>
+
+                                            <div class="col-lg-8">
+                                                <asp:TextBox ID="txtOldPassword" TextMode="Password" runat="server" CssClass="form-control border-input"></asp:TextBox>
+                                                <asp:RequiredFieldValidator ID="rfvOldPassword" runat="server" Display="Dynamic" ControlToValidate="txtOldPassword" ValidationGroup="vgChangePassword" ForeColor="Red">*</asp:RequiredFieldValidator>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4">كلمة السر الجديدة</label>
+
+                                            <div class="col-lg-8">
+                                                <asp:TextBox ID="txtNewPassword" TextMode="Password" runat="server" CssClass="form-control border-input"></asp:TextBox>
+                                                <asp:RequiredFieldValidator ID="rfvNewPassword" runat="server" Display="Dynamic" ControlToValidate="txtNewPassword" ValidationGroup="vgChangePassword" ForeColor="Red">*</asp:RequiredFieldValidator>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4">تأكيد كلمة السر</label>
+                                            <div class="col-lg-8">
+                                                <asp:TextBox ID="txtConfirmPassword" TextMode="Password" runat="server" CssClass="form-control border-input"></asp:TextBox>
+                                                <asp:RequiredFieldValidator ID="rfvConfirmPassword" runat="server" Display="Dynamic" ControlToValidate="txtConfirmPassword" ValidationGroup="vgChangePassword" ForeColor="Red">*</asp:RequiredFieldValidator>
+                                                <asp:CompareValidator ID="cvChangePassword" runat="server" ControlToValidate="txtConfirmPassword" ControlToCompare="txtNewPassword" ErrorMessage="كلمة السر غير متطابقه" ToolTip="كلمة السر غير متطابقه" ValidationGroup="vgChangePassword" ForeColor="Red" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="col-md-12 text-left fix">
+                                        <div class="clearfix"></div>
+                                        <asp:Button ID="btnSave" runat="server" CssClass="btn btn-sm btn-danger" Text="حفظ" OnClick="btnSave_Click" ValidationGroup="vgChangePassword" meta:resourcekey="btnSaveResource1" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </asp:Panel>
+                <!-- /.navbar-container -->
+            </div>
+            <div class="main-container ace-save-state" id="main-container">
+                <script type="text/javascript">
+                    try { ace.settings.loadState('main-container') } catch (e) { }
+                </script>
+                <div id="sidebar" class="sidebar responsive ace-save-state">
+                    <script type="text/javascript">
+                        try { ace.settings.loadState('sidebar') } catch (e) { }
+                    </script>
+                    <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                        <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-larg">
+                        </div>
+                        <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                        </div>
+                        <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                        </div>
+                    </div>
+                    <ul class="nav nav-list">
+                        <li
+                            <% if (true)
+                            { %>
+                            <% if (Request.Url.AbsoluteUri.ToLower().Contains("dashboard"))
+                            { %>
+                            class="active open" <% }
+                            else
+                            { %>class=""
+                            <% }
+                            }
+                            else
+                            {%>class="hidden"
+                            <%}
+
+                            %>>
+                            <a href="Dashboard.aspx">
+                                <i class="menu-icon fa fa-tachometer"></i>
+                                <span class="menu-text">لوحة متابعة الإنجاز </span>
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li
+                            <% if (UserPermissions.Any(p => p.ModuleID.Equals((int)ModulesEnum.Menus)))
+                            { %>
+                            <% if (Request.Url.AbsoluteUri.ToLower().Contains("/" + Common.CategoriesPath + ".aspx") || Request.Url.AbsoluteUri.ToLower().Contains("/" + Common.DocTypesPath + ".aspx") || Request.Url.AbsoluteUri.ToLower().Contains(Common.PrerequisitesPath + ".aspx") || Request.Url.AbsoluteUri.ToLower().Contains(Common.GovernmentalEntitiesPath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.CompaniesPath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.UnitStructureTypesPath))
+                            { %>
+                            class="active open" <% }
+                            else
+                            { %>class=""
+                            <% }
+                            }
+                            else
+                            {%>class="hidden"
+                            <%}
+
+                            %>>
+                            <a href="#" class="dropdown-toggle">
+                                <i class="menu-icon fa fa-list"></i>
+                                <span class="menu-text">القوائم </span>
+                                <b class="arrow fa fa-angle-down"></b>
+                            </a>
+                            <b class="arrow"></b>
+                            <ul class="submenu">
+                                <li <% if (UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.UnitStructureTypesPath)))
+                                    { %>
+                                    <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.UnitStructureTypesPath))
+                                    { %>
+                                    class="active" <% }
+                                    else
+                                    { %>class=""
+                                    <% }
+                                    }
+                                    else
+                                    {%>class="hidden"
+                                    <%} %>>
+                                    <a href="unit-structure-types.aspx">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        مستويات الهيكل التنظيمي
+                                    </a>
+                                    <b class="arrow"></b>
+                                </li>
+                                <li <% if (UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.GovernmentalEntitiesPath)))
+                                    { %>
+                                    <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.GovernmentalEntitiesPath))
+                                    { %>
+                                    class="active" <% }
+                                    else
+                                    { %>class=""
+                                    <% }
+                                    }
+                                    else
+                                    {%>class="hidden"
+                                    <%} %>>
+                                    <a href="governmental-entities.aspx">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        الجهات الحكومية
+                                    </a>
+                                    <b class="arrow"></b>
+                                </li>
+                                <li <% if (UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.CompaniesPath)))
+                                    { %>
+                                    <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.CompaniesPath))
+                                    { %>
+                                    class="active" <% }
+                                    else
+                                    { %>class=""
+                                    <% }
+                                    }
+                                    else
+                                    {%>class="hidden"
+                                    <%} %>>
+                                    <a href="companies.aspx">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        الشركات المنفذة
+                                    </a>
+                                    <b class="arrow"></b>
+                                </li>
+                                <li
+                                    <% if (UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.PrerequisitesPath)))
+                                    { %>
+                                    <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.PrerequisitesPath))
+                                    { %>
+                                    class="active" <% }
+                                    else
+                                    { %>class=""
+                                    <% }
+                                    }
+                                    else
+                                    {%>class="hidden"
+                                    <%}
+
+                            %>>
+                                    <a href="prerequisites.aspx">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        خطة التشغيل المركزية
+                                    </a>
+                                    <b class="arrow"></b>
+                                </li>
+                            </ul>
+                        </li>
+                        <li
+                            <% if (UserDetails.DeSerializeUserDetails(Session["User"].ToString()).GovernmentalEntityId==0&& UserPermissions.Any(p => p.ModuleID.Equals((int)ModulesEnum.Projects)))
+                            { %>
+                            <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectCategoriesPath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectDocTypesPath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectsPath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectAssetsPath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectDashboardPath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectFilesPath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectIssuesPath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectPrerequisitesPath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectSitesPath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectStocksPath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectStructurePath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectUsersPath))
+                            { %>
+                            class="active open" <% }
+                            else
+                            { %>class=""
+                            <% }
+                            }
+                            else
+                            {%>class="hidden"
+                            <%}
+
+                            %>>
+                            <a href="projects.aspx">
+                                <i class="menu-icon fa fa-cogs"></i>
+                                <span class="menu-text">المشروعات </span>
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li
+                            <% if (UserDetails.DeSerializeUserDetails(Session["User"].ToString()).GovernmentalEntityId==0&& UserPermissions.Any(p => p.ModuleID.Equals((int)ModulesEnum.Files)))
+                            { %>
+                            <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.SearchPath) ||Request.Url.AbsoluteUri.ToLower().Contains(Common.FilesIndexingPath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.DocsIndexingPath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.DocsQaPath))
+                            { %>
+                            class="active open" <% }
+                            else
+                            { %>class=""
+                            <% }
+                            }
+                            else
+                            {%>class="hidden"
+                            <%}
+
+                            %>>
+                            <a href="#" class="dropdown-toggle">
+                                <i class="menu-icon fa fa-file"></i>
+                                <span class="menu-text">ادارة الملفات </span>
+                                <b class="arrow fa fa-angle-down"></b>
+                            </a>
+                            <b class="arrow"></b>
+                            <ul class="submenu">
+                                 <li <% if (UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.SearchPath)))
+                                    { %>
+                                    <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.SearchPath))
+                                    { %>
+                                    class="active" <% }
+                                    else
+                                    { %>class=""
+                                    <% }
+                                    }
+                                    else
+                                    {%>class="hidden"
+                                    <%}%>>
+                                    <a href="search.aspx">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                  البحث
+                                    </a>
+                                    <b class="arrow"></b>
+                                </li>
+                               <li <% if (UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.FilesIndexingPath)))
+                                    { %>
+                                    <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.FilesIndexingPath))
+                                    { %>
+                                    class="active" <% }
+                                    else
+                                    { %>class=""
+                                    <% }
+                                    }
+                                    else
+                                    {%>class="hidden"
+                                    <%}%>>
+                                    <a href="files-indexing.aspx">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        فهرسة الملفات
+                                    </a>
+                                    <b class="arrow"></b>
+                                </li>
+                               <li <% if (UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.DocsIndexingPath)))
+                                    { %>
+                                    <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.DocsIndexingPath))
+                                    { %>
+                                    class="active" <% }
+                                    else
+                                    { %>class=""
+                                    <% }
+                                    }
+                                    else
+                                    {%>class="hidden"
+                                    <%}%>>
+                                    <a href="docs-indexing.aspx">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        فهرسة الوثائق
+                                    </a>
+                                    <b class="arrow"></b>
+                                </li>
+                                 <li <% if (UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.DocsQaPath)))
+                                    { %>
+                                    <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.DocsQaPath))
+                                    { %>
+                                    class="active" <% }
+                                    else
+                                    { %>class=""
+                                    <% }
+                                    }
+                                    else
+                                    {%>class="hidden"
+                                    <%}%>>
+                                    <a href="docs-qa.aspx">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        مراجعة الوثائق
+                                    </a>
+                                    <b class="arrow"></b>
+                                </li>
+                            </ul>
+                        </li>
+                        <li
+                            <% if (UserPermissions.Any(p => p.ModuleID.Equals((int)ModulesEnum.Archiving)))
+                            { %>
+                            <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.SearchPath) ||Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectFilesPath) || Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectDashboardPath))
+                            { %>
+                            class="active open" <% }
+                            else
+                            { %>class=""
+                            <% }
+                            }
+                            else
+                            {%>class="hidden"
+                            <%}
+
+                            %>>
+                            <a href="#" class="dropdown-toggle">
+                                <i class="menu-icon fa fa-file"></i>
+                                <span class="menu-text">الأرشفة اليومية </span>
+                                <b class="arrow fa fa-angle-down"></b>
+                            </a>
+                            <b class="arrow"></b>
+                            <ul class="submenu">
+                                 <li <% if (UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.SearchPath)))
+                                    { %>
+                                    <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.SearchPath))
+                                    { %>
+                                    class="active" <% }
+                                    else
+                                    { %>class=""
+                                    <% }
+                                    }
+                                    else
+                                    {%>class="hidden"
+                                    <%}%>>
+                                    <a href="search.aspx">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                  البحث
+                                    </a>
+                                    <b class="arrow"></b>
+                                </li>
+                               <li <% if (UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.ProjectDashboardPath)||p.PageUrl.ToLower().Equals(Common.ProjectFilesPath)))
+                                    { %>
+                                    <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectDashboardPath)||Request.Url.AbsoluteUri.ToLower().Contains(Common.ProjectFilesPath))
+                                    { %>
+                                    class="active" <% }
+                                    else
+                                    { %>class=""
+                                    <% }
+                                    }
+                                    else
+                                    {%>class="hidden"
+                                    <%}%>>
+                                    <a href="files-indexing.aspx" runat="server" id="lnkArchiving">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                       الأرشفة اليومية
+                                    </a>
+                                    <b class="arrow"></b>
+                                </li>
+                            </ul>
+                        </li>
+                       <li
+                            <% if (UserPermissions.Any(p => p.ModuleID.Equals((int)ModulesEnum.Issues)))
+                            { %>
+                            <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.IssuesPath))
+                            { %>
+                            class="active open" <% }
+                            else
+                            { %>class=""
+                            <% }
+                            }
+                            else
+                            {%>class="hidden"
+                            <%}
+
+                            %>>
+                            <a href="issues.aspx">
+                                <i class="menu-icon fa fa-pencil"></i>
+                                <span class="menu-text">المشكلات</span>
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li
+                            <% if (UserPermissions.Any(p => p.ModuleID.Equals((int)ModulesEnum.Security)))
+                            { %>
+                            <% if (Request.Url.AbsoluteUri.ToLower().Contains("/" + Common.UsersPath + ".aspx") || Request.Url.AbsoluteUri.ToLower().Contains("groups.aspx") || Request.Url.AbsoluteUri.ToLower().Contains("group-details"))
+                            { %>
+                            class="active open" <% }
+                            else
+                            { %>class=""
+                            <% }
+                            }
+                            else
+                            {%>class="hidden"
+                            <%}
+
+                            %>>
+                            <a href="#" class="dropdown-toggle">
+                                <i class="menu-icon fa fa-lock"></i>
+                                <span class="menu-text">أمن النظام </span>
+                                <b class="arrow fa fa-angle-down"></b>
+                            </a>
+                            <b class="arrow"></b>
+                            <ul class="submenu">
+                                <li <% if (UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.UsersPath)))
+                                    { %>
+                                    <% if (Request.Url.AbsoluteUri.ToLower().Contains("/" + Common.UsersPath + ".aspx"))
+                                    { %>
+                                    class="active" <% }
+                                    else
+                                    { %>class=""
+                                    <% }
+                                    }
+                                    else
+                                    {%>class="hidden"
+                                    <%}%>>
+                                    <a href="users.aspx">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        المستخدمين
+                                    </a>
+                                    <b class="arrow"></b>
+                                </li>
+                                <li <% if (UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.GroupsPath)))
+                                    { %>
+                                    <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.GroupsPath) || Request.Url.AbsoluteUri.ToLower().Contains("group-details"))
+                                    { %>
+                                    class="active" <% }
+                                    else
+                                    { %>class=""
+                                    <% }
+                                    }
+                                    else
+                                    {%>class="hidden"
+                                    <%}%>>
+                                    <a href="groups.aspx">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        المجموعات
+                                    </a>
+                                    <b class="arrow"></b>
+                                </li>
+                            </ul>
+                        </li>
+                        <li
+                            <% if (UserPermissions.Any(p => p.ModuleID.Equals((int)ModulesEnum.ControlPanel)))
+                            { %>
+                            <% if (Request.Url.AbsoluteUri.ToLower().Contains(Common.ControlPanelPath))
+                            { %>
+                            class="active open" <% }
+                            else
+                            { %>class=""
+                            <% }
+                            }
+                            else
+                            {%>class="hidden"
+                            <%}
+
+                            %>>
+                            <a href="control-panel.aspx">
+                                <i class="menu-icon fa fa-cog"></i>
+                                <span class="menu-text">لوحة التحكم </span>
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li>
+                            <a href="boxfile-birth-certificate.aspx">
+                                <i class="menu-icon fa fa-line-chart"></i>
+                                <span class="menu-text">التقارير</span>
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                    <!-- /.nav-list -->
+                    <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+                        <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+                    </div>
+                </div>
+                <div class="main-content">
+                    <div class="main-content-inner">
+                        <div id="breadcrumbs" runat="server" class="breadcrumbs ace-save-state">
+                            <ul class="breadcrumb" runat="server" id="ulBreadcrumb">
+                            </ul>
+                            <asp:HiddenField ID="hdfTableName" runat="server" />
+                            <a id="lnkHistory" runat="server" class="pull-left" target="_blank"><i class="fa fa-cog"></i> سجل الحالات</a>
+                        </div>
+                        <div class="page-content">
+                            <!-- ContentPlaceHolder -->
+                            <div class="row">
+                                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                                </asp:ContentPlaceHolder>
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.page-content -->
+                        <div class="footer">
+                            <div class="footer-inner">
+                                <div class="footer-content">
+                                    <span class="bigger-120">
+                                        <span class="blue bolder">Xerox</span>
+                                        Development &copy; 2020-2021
+                                    </span>
+                                    &nbsp; &nbsp;
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                            <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- /.main-content -->
+
+            </div>
+
+        </div>
+        <!-- basic scripts -->
+
+        <!--[if !IE]> -->
+
+
+        <!-- <![endif]-->
+
+        <!--[if IE]>
+<script src="App_Themes/js/jquery-1.11.3.min.js"></script>
+<![endif]-->
+        <script type="text/javascript">
+            if ('ontouchstart' in document.documentElement) document.write("<script src='App_Themes/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        </script>
+        <script src="App_Themes/js/bootstrap.min.js"></script>
+        <script src="App_Themes/js/jquery-ui.custom.min.js"></script>
+        <script src="App_Themes/js/jquery.ui.touch-punch.min.js"></script>
+        <script src="App_Themes/js/ace-elements.min.js"></script>
+        <script src="App_Themes/js/ace.min.js"></script>
+        <script src="App_Themes/js/dataTables.min.js"></script>
+        <script src="App_Themes/js/bootstrap-timepicker.js"></script>
+        <script src="App_Themes/js/jquery.dataTables.js"></script>
+        <%--<script src="App_Themes/js/select2.js"></script>--%>
+        <script src="App_Themes/js/bootstrap-multiselect.min.js"></script>
+        <script src="App_Themes/js/tiny-scrollbar.js"></script>
+        <%--<script src="App_Themes/js/custom.js"></script>--%>
+        <%--<script src="App_Themes/js/utils.js"></script>--%>
+        <script src="App_Themes/js/stream_layers.js"></script>
+        <script src="App_Themes/js/tiny-scrollbar.js"></script>
+        <%--<script src="App_Themes/js/tooltip.js"></script>--%>
+        <script src="App_Themes/js/lte-ie7.js"></script>
+    </form>
+</body>
+</html>

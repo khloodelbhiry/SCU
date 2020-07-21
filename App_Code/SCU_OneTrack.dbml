@@ -1,0 +1,1018 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SCU_OneTrack_6-7" Class="SCU_OneTrackDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=SCU_OneTrack_6-7;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="SCUConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.ActionsTypes" Member="ActionsTypes">
+    <Type Name="ActionsType">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="ActionsType_DocumentTransaction" Member="DocumentTransactions" ThisKey="id" OtherKey="actionTypeId" Type="DocumentTransaction" />
+      <Association Name="ActionsType_FileTransaction" Member="FileTransactions" ThisKey="id" OtherKey="actionTypeId" Type="FileTransaction" />
+      <Association Name="ActionsType_StatesTransitionAction" Member="StatesTransitionActions" ThisKey="id" OtherKey="actionTypeId" Type="StatesTransitionAction" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ActivityTypes" Member="ActivityTypes">
+    <Type Name="ActivityType">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="ActivityType_FormActivityType" Member="FormActivityTypes" ThisKey="id" OtherKey="activityTypeId" Type="FormActivityType" />
+      <Association Name="ActivityType_PrerequisitesTransaction" Member="PrerequisitesTransactions" ThisKey="id" OtherKey="activityTypeId" Type="PrerequisitesTransaction" />
+      <Association Name="ActivityType_ProductionSetting" Member="ProductionSettings" ThisKey="id" OtherKey="activityTypeId" Type="ProductionSetting" />
+      <Association Name="ActivityType_AuditLog" Member="AuditLogs" ThisKey="id" OtherKey="activityId" Type="AuditLog" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AssetsMaintenance" Member="AssetsMaintenances">
+    <Type Name="AssetsMaintenance">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="assetsId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="exitedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="exitDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="enteredBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="entryDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="reason" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Asset_AssetsMaintenance" Member="Asset" ThisKey="assetsId" OtherKey="id" Type="Asset" IsForeignKey="true" />
+      <Association Name="User_AssetsMaintenance" Member="User" ThisKey="exitedBy" OtherKey="id" Type="User" IsForeignKey="true" />
+      <Association Name="User_AssetsMaintenance1" Member="User1" ThisKey="enteredBy" OtherKey="id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AssetsStatus" Member="AssetsStatus">
+    <Type Name="AssetsStatus">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="AssetsStatus_Asset" Member="Assets" ThisKey="id" OtherKey="assetsStatusId" Type="Asset" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Boxes" Member="Boxes">
+    <Type Name="Box">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="unitStructureId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="code" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="barcode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Box_BoxFile" Member="BoxFiles" ThisKey="id" OtherKey="boxId" Type="BoxFile" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Companies" Member="Companies">
+    <Type Name="Company">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="administrator" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="mobile" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Company_Asset" Member="Assets" ThisKey="id" OtherKey="companyId" Type="Asset" />
+      <Association Name="Company_User" Member="Users" ThisKey="id" OtherKey="companyId" Type="User" />
+      <Association Name="Company_AuditLog" Member="AuditLogs" ThisKey="id" OtherKey="companyId" Type="AuditLog" />
+      <Association Name="Company_Consumable" Member="Consumables" ThisKey="id" OtherKey="companyId" Type="Consumable" />
+      <Association Name="Company_Project" Member="Projects" ThisKey="id" OtherKey="companyId" Type="Project" />
+      <Association Name="Status_Company" Member="Status" ThisKey="statusId" OtherKey="id" Type="Status" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ConsumableStatus" Member="ConsumableStatus">
+    <Type Name="ConsumableStatus">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ConsumableTypes" Member="ConsumableTypes">
+    <Type Name="ConsumableType">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="ConsumableType_Consumable" Member="Consumables" ThisKey="id" OtherKey="typeId" Type="Consumable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DocumentTransactions" Member="DocumentTransactions">
+    <Type Name="DocumentTransaction">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="documentId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="stateTransitionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="actionTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="userId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="ActionsType_DocumentTransaction" Member="ActionsType" ThisKey="actionTypeId" OtherKey="id" Type="ActionsType" IsForeignKey="true" />
+      <Association Name="FileDocument_DocumentTransaction" Member="FileDocument" ThisKey="documentId" OtherKey="id" Type="FileDocument" IsForeignKey="true" />
+      <Association Name="StatesTransition_DocumentTransaction" Member="StatesTransition" ThisKey="stateTransitionId" OtherKey="id" Type="StatesTransition" IsForeignKey="true" />
+      <Association Name="User_DocumentTransaction" Member="User" ThisKey="userId" OtherKey="id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FileDocuments" Member="FileDocuments">
+    <Type Name="FileDocument">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="fileId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="code" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="barcode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="categoryId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="docTypeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="reference" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="receivingPartyId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="sendingPartyId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="receiverId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="senderId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="noOfPages" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="notes" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="isIndexed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="isReviewed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="FileDocument_DocumentTransaction" Member="DocumentTransactions" ThisKey="id" OtherKey="documentId" Type="DocumentTransaction" />
+      <Association Name="FileDocument_FileDocumentKeyword" Member="FileDocumentKeywords" ThisKey="id" OtherKey="fileDocumentId" Type="FileDocumentKeyword" />
+      <Association Name="FileDocument_FileDocumentReference" Member="FileDocumentReferences" ThisKey="id" OtherKey="fileDocumentId" Type="FileDocumentReference" />
+      <Association Name="BoxFile_FileDocument" Member="BoxFile" ThisKey="fileId" OtherKey="id" Type="BoxFile" IsForeignKey="true" />
+      <Association Name="Person_FileDocument" Member="Person" ThisKey="senderId" OtherKey="id" Type="Person" IsForeignKey="true" />
+      <Association Name="Person_FileDocument1" Member="Person1" ThisKey="receiverId" OtherKey="id" Type="Person" IsForeignKey="true" />
+      <Association Name="Party_FileDocument" Member="Party" ThisKey="receivingPartyId" OtherKey="id" Type="Party" IsForeignKey="true" />
+      <Association Name="Party_FileDocument1" Member="Party1" ThisKey="sendingPartyId" OtherKey="id" Type="Party" IsForeignKey="true" />
+      <Association Name="Category_FileDocument" Member="Category" ThisKey="categoryId" OtherKey="id" Type="Category" IsForeignKey="true" />
+      <Association Name="DocType_FileDocument" Member="DocType" ThisKey="docTypeId" OtherKey="id" Type="DocType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FileTransactions" Member="FileTransactions">
+    <Type Name="FileTransaction">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="fileId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="stateTransitionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="actionTypeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="userId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="ActionsType_FileTransaction" Member="ActionsType" ThisKey="actionTypeId" OtherKey="id" Type="ActionsType" IsForeignKey="true" />
+      <Association Name="BoxFile_FileTransaction" Member="BoxFile" ThisKey="fileId" OtherKey="id" Type="BoxFile" IsForeignKey="true" />
+      <Association Name="StatesTransition_FileTransaction" Member="StatesTransition" ThisKey="stateTransitionId" OtherKey="id" Type="StatesTransition" IsForeignKey="true" />
+      <Association Name="User_FileTransaction" Member="User" ThisKey="userId" OtherKey="id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FormActivityTypes" Member="FormActivityTypes">
+    <Type Name="FormActivityType">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="formId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="activityTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="FormActivityType_GroupActivity" Member="GroupActivities" ThisKey="id" OtherKey="formActivityTypeId" Type="GroupActivity" />
+      <Association Name="ActivityType_FormActivityType" Member="ActivityType" ThisKey="activityTypeId" OtherKey="id" Type="ActivityType" IsForeignKey="true" />
+      <Association Name="ModuleForm_FormActivityType" Member="ModuleForm" ThisKey="formId" OtherKey="id" Type="ModuleForm" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GroupActivities" Member="GroupActivities">
+    <Type Name="GroupActivity">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="groupId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="formActivityTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="FormActivityType_GroupActivity" Member="FormActivityType" ThisKey="formActivityTypeId" OtherKey="id" Type="FormActivityType" IsForeignKey="true" />
+      <Association Name="Group_GroupActivity" Member="Group" ThisKey="groupId" OtherKey="id" Type="Group" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Groups" Member="Groups">
+    <Type Name="Group">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Group_GroupActivity" Member="GroupActivities" ThisKey="id" OtherKey="groupId" Type="GroupActivity" />
+      <Association Name="Group_GroupPrerequisitesCompletion" Member="GroupPrerequisitesCompletions" ThisKey="id" OtherKey="groupId" Type="GroupPrerequisitesCompletion" />
+      <Association Name="Group_GroupStateTransitionAction" Member="GroupStateTransitionActions" ThisKey="id" OtherKey="groupId" Type="GroupStateTransitionAction" />
+      <Association Name="Group_User" Member="Users" ThisKey="id" OtherKey="groupId" Type="User" />
+      <Association Name="Status_Group" Member="Status" ThisKey="statusId" OtherKey="id" Type="Status" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ImplementerTypes" Member="ImplementerTypes">
+    <Type Name="ImplementerType">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="ImplementerType_ProcessPrerequisite" Member="ProcessPrerequisites" ThisKey="id" OtherKey="implementerTypeId" Type="ProcessPrerequisite" />
+      <Association Name="ImplementerType_StatesTransition" Member="StatesTransitions" ThisKey="id" OtherKey="implementerTypeId" Type="StatesTransition" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IssueAttachments" Member="IssueAttachments">
+    <Type Name="IssueAttachment">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="issueId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fileName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="userId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Issue_IssueAttachment" Member="Issue" ThisKey="issueId" OtherKey="id" Type="Issue" IsForeignKey="true" />
+      <Association Name="User_IssueAttachment" Member="User" ThisKey="userId" OtherKey="id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Issues" Member="Issues">
+    <Type Name="Issue">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="issue" Member="issue1" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="severityId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="userId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Issue_IssueAttachment" Member="IssueAttachments" ThisKey="id" OtherKey="issueId" Type="IssueAttachment" />
+      <Association Name="Issue_IssueNote" Member="IssueNotes" ThisKey="id" OtherKey="issueId" Type="IssueNote" />
+      <Association Name="IssueSeverity_Issue" Member="IssueSeverity" ThisKey="severityId" OtherKey="id" Type="IssueSeverity" IsForeignKey="true" />
+      <Association Name="IssueStatus_Issue" Member="IssueStatus" ThisKey="statusId" OtherKey="id" Type="IssueStatus" IsForeignKey="true" />
+      <Association Name="User_Issue" Member="User" ThisKey="userId" OtherKey="id" Type="User" IsForeignKey="true" />
+      <Association Name="Project_Issue" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IssueSeverities" Member="IssueSeverities">
+    <Type Name="IssueSeverity">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="IssueSeverity_Issue" Member="Issues" ThisKey="id" OtherKey="severityId" Type="Issue" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IssueStatus" Member="IssueStatus">
+    <Type Name="IssueStatus">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="IssueStatus_Issue" Member="Issues" ThisKey="id" OtherKey="statusId" Type="Issue" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Modules" Member="Modules">
+    <Type Name="Module">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Association Name="Module_ModuleForm" Member="ModuleForms" ThisKey="id" OtherKey="moduleId" Type="ModuleForm" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PrerequisiteCategories" Member="PrerequisiteCategories">
+    <Type Name="PrerequisiteCategory">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="PrerequisiteCategory_ProcessPrerequisite" Member="ProcessPrerequisites" ThisKey="id" OtherKey="prerequisiteCategoryId" Type="ProcessPrerequisite" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PrerequisitesTransactions" Member="PrerequisitesTransactions">
+    <Type Name="PrerequisitesTransaction">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="processPrerequisiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="activityTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="userId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="ActivityType_PrerequisitesTransaction" Member="ActivityType" ThisKey="activityTypeId" OtherKey="id" Type="ActivityType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PrivacyStatus" Member="PrivacyStatus">
+    <Type Name="PrivacyStatus">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="PrivacyStatus_BoxFile" Member="BoxFiles" ThisKey="id" OtherKey="privacyStatusId" Type="BoxFile" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Processes" Member="Processes">
+    <Type Name="Process">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Process_ProcessObejct" Member="ProcessObejcts" ThisKey="id" OtherKey="processId" Type="ProcessObejct" />
+      <Association Name="Process_ProcessPrerequisite" Member="ProcessPrerequisites" ThisKey="id" OtherKey="processId" Type="ProcessPrerequisite" />
+      <Association Name="Process_StatesTransition" Member="StatesTransitions" ThisKey="id" OtherKey="processId" Type="StatesTransition" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProcessObejcts" Member="ProcessObejcts">
+    <Type Name="ProcessObejct">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="processId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="ProcessObejct_StatesTransition" Member="StatesTransitions" ThisKey="id" OtherKey="objectId" Type="StatesTransition" />
+      <Association Name="Process_ProcessObejct" Member="Process" ThisKey="processId" OtherKey="id" Type="Process" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProductionMetricUnits" Member="ProductionMetricUnits">
+    <Type Name="ProductionMetricUnit">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="ProductionMetricUnit_ProductionSetting" Member="ProductionSettings" ThisKey="id" OtherKey="productionMetricUnitId" Type="ProductionSetting" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProductionSettings" Member="ProductionSettings">
+    <Type Name="ProductionSetting">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="activityTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="productionMetricUnitId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="timeUnitId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="isActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="ActivityType_ProductionSetting" Member="ActivityType" ThisKey="activityTypeId" OtherKey="id" Type="ActivityType" IsForeignKey="true" />
+      <Association Name="ProductionMetricUnit_ProductionSetting" Member="ProductionMetricUnit" ThisKey="productionMetricUnitId" OtherKey="id" Type="ProductionMetricUnit" IsForeignKey="true" />
+      <Association Name="TimeUnit_ProductionSetting" Member="TimeUnit" ThisKey="timeUnitId" OtherKey="id" Type="TimeUnit" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProgressCalculationTypes" Member="ProgressCalculationTypes">
+    <Type Name="ProgressCalculationType">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="ProgressCalculationType_ProcessPrerequisite" Member="ProcessPrerequisites" ThisKey="id" OtherKey="progressCalculationTypeId" Type="ProcessPrerequisite" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProjectStateTransition" Member="ProjectStateTransitions">
+    <Type Name="ProjectStateTransition">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="stateTransitionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="startDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="endDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="progress" Type="System.Decimal" DbType="Decimal(18,4)" CanBeNull="true" />
+      <Association Name="StatesTransition_ProjectStateTransition" Member="StatesTransition" ThisKey="stateTransitionId" OtherKey="id" Type="StatesTransition" IsForeignKey="true" />
+      <Association Name="Project_ProjectStateTransition" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Status" Member="Status">
+    <Type Name="Status">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Status_Company" Member="Companies" ThisKey="id" OtherKey="statusId" Type="Company" />
+      <Association Name="Status_Group" Member="Groups" ThisKey="id" OtherKey="statusId" Type="Group" />
+      <Association Name="Status_IssueNote" Member="IssueNotes" ThisKey="id" OtherKey="statusId" Type="IssueNote" />
+      <Association Name="Status_Stock" Member="Stocks" ThisKey="id" OtherKey="statusId" Type="Stock" />
+      <Association Name="Status_GovernmentalEntity" Member="GovernmentalEntities" ThisKey="id" OtherKey="statusId" Type="GovernmentalEntity" />
+      <Association Name="Status_User" Member="Users" ThisKey="id" OtherKey="statusId" Type="User" />
+      <Association Name="Status_Person" Member="Persons" ThisKey="id" OtherKey="statusId" Type="Person" />
+      <Association Name="Status_Party" Member="Parties" ThisKey="id" OtherKey="statusId" Type="Party" />
+      <Association Name="Status_Consumable" Member="Consumables" ThisKey="id" OtherKey="statusId" Type="Consumable" />
+      <Association Name="Status_BusinessReference" Member="BusinessReferences" ThisKey="id" OtherKey="statusId" Type="BusinessReference" />
+      <Association Name="Status_DocType" Member="DocTypes" ThisKey="id" OtherKey="statusId" Type="DocType" />
+      <Association Name="Status_ProjectTarget" Member="ProjectTargets" ThisKey="id" OtherKey="statusId" Type="ProjectTarget" />
+      <Association Name="Status_SalaryEffect" Member="SalaryEffects" ThisKey="id" OtherKey="statusId" Type="SalaryEffect" />
+      <Association Name="Status_Project" Member="Projects" ThisKey="id" OtherKey="statusId" Type="Project" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TimeUnits" Member="TimeUnits">
+    <Type Name="TimeUnit">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="TimeUnit_ProductionSetting" Member="ProductionSettings" ThisKey="id" OtherKey="timeUnitId" Type="ProductionSetting" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WorkSites" Member="WorkSites">
+    <Type Name="WorkSite">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="lat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="lng" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="requiredSpace" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="actualArea" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="noOfOffices" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="noOfChairs" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="noOfFilingCabinets" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="noOfTables" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="airConditioner" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="electricitySource" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="closeToBathroom" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="maintenancePerson" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="maintenancePersonPhone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="securityPerson" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="securityPersonPhone" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="internetLineSpeed" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="notes" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="preparedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="prepareDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="receivedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="receivedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="WorkSite_WorkSiteImage" Member="WorkSiteImages" ThisKey="id" OtherKey="workSiteId" Type="WorkSiteImage" />
+      <Association Name="Project_WorkSite" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProjectPrerequisites" Member="ProjectPrerequisites">
+    <Type Name="ProjectPrerequisite">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="processPrerequisiteId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="startDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="endDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="progress" Type="System.Decimal" DbType="Decimal(18,4)" CanBeNull="true" />
+      <Column Name="doneBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="doneDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="ProcessPrerequisite_ProjectPrerequisite" Member="ProcessPrerequisite" ThisKey="processPrerequisiteId" OtherKey="id" Type="ProcessPrerequisite" IsForeignKey="true" />
+      <Association Name="User_ProjectPrerequisite" Member="User" ThisKey="doneBy" OtherKey="id" Type="User" IsForeignKey="true" />
+      <Association Name="Project_ProjectPrerequisite" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GroupPrerequisitesCompletion" Member="GroupPrerequisitesCompletions">
+    <Type Name="GroupPrerequisitesCompletion">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="groupId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="processPrerequisiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Group_GroupPrerequisitesCompletion" Member="Group" ThisKey="groupId" OtherKey="id" Type="Group" IsForeignKey="true" />
+      <Association Name="ProcessPrerequisite_GroupPrerequisitesCompletion" Member="ProcessPrerequisite" ThisKey="processPrerequisiteId" OtherKey="id" Type="ProcessPrerequisite" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StatesTransitionActions" Member="StatesTransitionActions">
+    <Type Name="StatesTransitionAction">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="statesTransitionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="actionTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="StatesTransitionAction_GroupStateTransitionAction" Member="GroupStateTransitionActions" ThisKey="id" OtherKey="stateTransitionActionId" Type="GroupStateTransitionAction" />
+      <Association Name="ActionsType_StatesTransitionAction" Member="ActionsType" ThisKey="actionTypeId" OtherKey="id" Type="ActionsType" IsForeignKey="true" />
+      <Association Name="StatesTransition_StatesTransitionAction" Member="StatesTransition" ThisKey="statesTransitionId" OtherKey="id" Type="StatesTransition" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GroupStateTransitionActions" Member="GroupStateTransitionActions">
+    <Type Name="GroupStateTransitionAction">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="groupId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="stateTransitionActionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Group_GroupStateTransitionAction" Member="Group" ThisKey="groupId" OtherKey="id" Type="Group" IsForeignKey="true" />
+      <Association Name="StatesTransitionAction_GroupStateTransitionAction" Member="StatesTransitionAction" ThisKey="stateTransitionActionId" OtherKey="id" Type="StatesTransitionAction" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ExceptionLogs" Member="ExceptionLogs">
+    <Type Name="ExceptionLog">
+      <Column Name="ExceptionLog_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ExceptionLog_Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ExceptionLog_Message" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="ExceptionLog_StackTrace" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="ExceptionLog_PageName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IssueNotes" Member="IssueNotes">
+    <Type Name="IssueNote">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="issueId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="note" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="userId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="IssueNote_NoteAttachment" Member="NoteAttachments" ThisKey="id" OtherKey="issueNoteId" Type="NoteAttachment" />
+      <Association Name="Issue_IssueNote" Member="Issue" ThisKey="issueId" OtherKey="id" Type="Issue" IsForeignKey="true" />
+      <Association Name="Status_IssueNote" Member="Status" ThisKey="statusId" OtherKey="id" Type="Status" IsForeignKey="true" />
+      <Association Name="User_IssueNote" Member="User" ThisKey="userId" OtherKey="id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NoteAttachments" Member="NoteAttachments">
+    <Type Name="NoteAttachment">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="issueNoteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fileName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="userId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="IssueNote_NoteAttachment" Member="IssueNote" ThisKey="issueNoteId" OtherKey="id" Type="IssueNote" IsForeignKey="true" />
+      <Association Name="User_NoteAttachment" Member="User" ThisKey="userId" OtherKey="id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WorkSiteImages" Member="WorkSiteImages">
+    <Type Name="WorkSiteImage">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="workSiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fileName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="userId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="WorkSite_WorkSiteImage" Member="WorkSite" ThisKey="workSiteId" OtherKey="id" Type="WorkSite" IsForeignKey="true" />
+      <Association Name="User_WorkSiteImage" Member="User" ThisKey="userId" OtherKey="id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Stocks" Member="Stocks">
+    <Type Name="Stock">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="code" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="cityId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="administrator" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="mobile" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="lat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="lng" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="notes" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Status_Stock" Member="Status" ThisKey="statusId" OtherKey="id" Type="Status" IsForeignKey="true" />
+      <Association Name="City_Stock" Member="City" ThisKey="cityId" OtherKey="id" Type="City" IsForeignKey="true" />
+      <Association Name="Project_Stock" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Cities" Member="Cities">
+    <Type Name="City">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="governorateId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="City_Stock" Member="Stocks" ThisKey="id" OtherKey="cityId" Type="Stock" />
+      <Association Name="Governorate_City" Member="Governorate" ThisKey="governorateId" OtherKey="id" Type="Governorate" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Governorates" Member="Governorates">
+    <Type Name="Governorate">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Governorate_City" Member="Cities" ThisKey="id" OtherKey="governorateId" Type="City" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Assets" Member="Assets">
+    <Type Name="Asset">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="companyId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="model" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="serialNo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="assetsStatusId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Asset_AssetsMaintenance" Member="AssetsMaintenances" ThisKey="id" OtherKey="assetsId" Type="AssetsMaintenance" />
+      <Association Name="Asset_AssetsAssignment" Member="AssetsAssignments" ThisKey="id" OtherKey="assetsId" Type="AssetsAssignment" />
+      <Association Name="AssetsStatus_Asset" Member="AssetsStatus" ThisKey="assetsStatusId" OtherKey="id" Type="AssetsStatus" IsForeignKey="true" />
+      <Association Name="Company_Asset" Member="Company" ThisKey="companyId" OtherKey="id" Type="Company" IsForeignKey="true" />
+      <Association Name="Project_Asset" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProcessPrerequisites" Member="ProcessPrerequisites">
+    <Type Name="ProcessPrerequisite">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="processId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="prerequisiteCategoryId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="implementerTypeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="previousPrerequisiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="progressCalculationTypeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="relativeWeight" Type="System.Decimal" DbType="Decimal(18,4)" CanBeNull="true" />
+      <Column Name="forEveryProject" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="ProcessPrerequisite_ProjectPrerequisite" Member="ProjectPrerequisites" ThisKey="id" OtherKey="processPrerequisiteId" Type="ProjectPrerequisite" />
+      <Association Name="ProcessPrerequisite_GroupPrerequisitesCompletion" Member="GroupPrerequisitesCompletions" ThisKey="id" OtherKey="processPrerequisiteId" Type="GroupPrerequisitesCompletion" />
+      <Association Name="ProcessPrerequisite_StatesTransition" Member="StatesTransitions" ThisKey="id" OtherKey="prerequisiteId" Type="StatesTransition" />
+      <Association Name="ImplementerType_ProcessPrerequisite" Member="ImplementerType" ThisKey="implementerTypeId" OtherKey="id" Type="ImplementerType" IsForeignKey="true" />
+      <Association Name="PrerequisiteCategory_ProcessPrerequisite" Member="PrerequisiteCategory" ThisKey="prerequisiteCategoryId" OtherKey="id" Type="PrerequisiteCategory" IsForeignKey="true" />
+      <Association Name="Process_ProcessPrerequisite" Member="Process" ThisKey="processId" OtherKey="id" Type="Process" IsForeignKey="true" />
+      <Association Name="ProgressCalculationType_ProcessPrerequisite" Member="ProgressCalculationType" ThisKey="progressCalculationTypeId" OtherKey="id" Type="ProgressCalculationType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ModuleForms" Member="ModuleForms">
+    <Type Name="ModuleForm">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="moduleId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="url" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="parentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="ModuleForm_FormActivityType" Member="FormActivityTypes" ThisKey="id" OtherKey="formId" Type="FormActivityType" />
+      <Association Name="ModuleForm_StatesTransition" Member="StatesTransitions" ThisKey="id" OtherKey="moduleFormId" Type="StatesTransition" />
+      <Association Name="Module_ModuleForm" Member="Module" ThisKey="moduleId" OtherKey="id" Type="Module" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BoxFiles" Member="BoxFiles">
+    <Type Name="BoxFile">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="unitStructureId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="code" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="barcode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="nextStateId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="boxId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="batchId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="reference" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="privacyStatusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="employee" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="noOfPages" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="notes" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="indexedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="qaBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="BoxFile_FileDocument" Member="FileDocuments" ThisKey="id" OtherKey="fileId" Type="FileDocument" />
+      <Association Name="BoxFile_FileTransaction" Member="FileTransactions" ThisKey="id" OtherKey="fileId" Type="FileTransaction" />
+      <Association Name="Box_BoxFile" Member="Box" ThisKey="boxId" OtherKey="id" Type="Box" IsForeignKey="true" />
+      <Association Name="PrivacyStatus_BoxFile" Member="PrivacyStatus" ThisKey="privacyStatusId" OtherKey="id" Type="PrivacyStatus" IsForeignKey="true" />
+      <Association Name="StatesTransition_BoxFile" Member="StatesTransition" ThisKey="nextStateId" OtherKey="id" Type="StatesTransition" IsForeignKey="true" />
+      <Association Name="UnitStructure_BoxFile" Member="UnitStructure" ThisKey="unitStructureId" OtherKey="id" Type="UnitStructure" IsForeignKey="true" />
+      <Association Name="User_BoxFile" Member="User" ThisKey="indexedBy" OtherKey="id" Type="User" IsForeignKey="true" />
+      <Association Name="User_BoxFile1" Member="User1" ThisKey="qaBy" OtherKey="id" Type="User" IsForeignKey="true" />
+      <Association Name="Batch_BoxFile" Member="Batch" ThisKey="batchId" OtherKey="id" Type="Batch" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StatesTransition" Member="StatesTransitions">
+    <Type Name="StatesTransition">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="processId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="dashboardAliase" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="stateOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="prerequisiteId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="objectId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="moduleFormId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="relativeWeight" Type="System.Decimal" DbType="Decimal(18,4)" CanBeNull="true" />
+      <Column Name="implementerTypeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="digitization" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="StatesTransition_DocumentTransaction" Member="DocumentTransactions" ThisKey="id" OtherKey="stateTransitionId" Type="DocumentTransaction" />
+      <Association Name="StatesTransition_FileTransaction" Member="FileTransactions" ThisKey="id" OtherKey="stateTransitionId" Type="FileTransaction" />
+      <Association Name="StatesTransition_ProjectStateTransition" Member="ProjectStateTransitions" ThisKey="id" OtherKey="stateTransitionId" Type="ProjectStateTransition" />
+      <Association Name="StatesTransition_StatesTransitionAction" Member="StatesTransitionActions" ThisKey="id" OtherKey="statesTransitionId" Type="StatesTransitionAction" />
+      <Association Name="StatesTransition_BoxFile" Member="BoxFiles" ThisKey="id" OtherKey="nextStateId" Type="BoxFile" />
+      <Association Name="StatesTransition_ProjectTarget" Member="ProjectTargets" ThisKey="id" OtherKey="stateTransitionId" Type="ProjectTarget" />
+      <Association Name="ImplementerType_StatesTransition" Member="ImplementerType" ThisKey="implementerTypeId" OtherKey="id" Type="ImplementerType" IsForeignKey="true" />
+      <Association Name="ModuleForm_StatesTransition" Member="ModuleForm" ThisKey="moduleFormId" OtherKey="id" Type="ModuleForm" IsForeignKey="true" />
+      <Association Name="Process_StatesTransition" Member="Process" ThisKey="processId" OtherKey="id" Type="Process" IsForeignKey="true" />
+      <Association Name="ProcessObejct_StatesTransition" Member="ProcessObejct" ThisKey="objectId" OtherKey="id" Type="ProcessObejct" IsForeignKey="true" />
+      <Association Name="ProcessPrerequisite_StatesTransition" Member="ProcessPrerequisite" ThisKey="prerequisiteId" OtherKey="id" Type="ProcessPrerequisite" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GovernmentalEntities" Member="GovernmentalEntities">
+    <Type Name="GovernmentalEntity">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="code" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="administrator" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="mobile" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="GovernmentalEntity_UnitStructure" Member="UnitStructures" ThisKey="id" OtherKey="governmentalEntityId" Type="UnitStructure" />
+      <Association Name="GovernmentalEntity_User" Member="Users" ThisKey="id" OtherKey="governmentalEntityId" Type="User" />
+      <Association Name="GovernmentalEntity_Project" Member="Projects" ThisKey="id" OtherKey="governmentalEntityId" Type="Project" />
+      <Association Name="Status_GovernmentalEntity" Member="Status" ThisKey="statusId" OtherKey="id" Type="Status" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UnitStructureTypes" Member="UnitStructureTypes">
+    <Type Name="UnitStructureType">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UnitStructure" Member="UnitStructures">
+    <Type Name="UnitStructure">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="governmentalEntityId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="typeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="code" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="parentId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="lvl" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="noOfFiles" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="UnitStructure_BoxFile" Member="BoxFiles" ThisKey="id" OtherKey="unitStructureId" Type="BoxFile" />
+      <Association Name="UnitStructure_User" Member="Users" ThisKey="id" OtherKey="unitStructureId" Type="User" />
+      <Association Name="UnitStructure_Batch" Member="Batches" ThisKey="id" OtherKey="unitStructureId" Type="Batch" />
+      <Association Name="GovernmentalEntity_UnitStructure" Member="GovernmentalEntity" ThisKey="governmentalEntityId" OtherKey="id" Type="GovernmentalEntity" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="fullName" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="mobile" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="groupId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="governmentalEntityId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="unitStructureId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="companyId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="hasWorkLicense" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="User_AssetsMaintenance" Member="AssetsMaintenances" ThisKey="id" OtherKey="exitedBy" Type="AssetsMaintenance" />
+      <Association Name="User_AssetsMaintenance1" Member="AssetsMaintenances1" ThisKey="id" OtherKey="enteredBy" Type="AssetsMaintenance" />
+      <Association Name="User_DocumentTransaction" Member="DocumentTransactions" ThisKey="id" OtherKey="userId" Type="DocumentTransaction" />
+      <Association Name="User_FileTransaction" Member="FileTransactions" ThisKey="id" OtherKey="userId" Type="FileTransaction" />
+      <Association Name="User_IssueAttachment" Member="IssueAttachments" ThisKey="id" OtherKey="userId" Type="IssueAttachment" />
+      <Association Name="User_Issue" Member="Issues" ThisKey="id" OtherKey="userId" Type="Issue" />
+      <Association Name="User_ProjectPrerequisite" Member="ProjectPrerequisites" ThisKey="id" OtherKey="doneBy" Type="ProjectPrerequisite" />
+      <Association Name="User_IssueNote" Member="IssueNotes" ThisKey="id" OtherKey="userId" Type="IssueNote" />
+      <Association Name="User_NoteAttachment" Member="NoteAttachments" ThisKey="id" OtherKey="userId" Type="NoteAttachment" />
+      <Association Name="User_WorkSiteImage" Member="WorkSiteImages" ThisKey="id" OtherKey="userId" Type="WorkSiteImage" />
+      <Association Name="User_BoxFile" Member="BoxFiles" ThisKey="id" OtherKey="indexedBy" Type="BoxFile" />
+      <Association Name="User_BoxFile1" Member="BoxFiles1" ThisKey="id" OtherKey="qaBy" Type="BoxFile" />
+      <Association Name="User_Batch" Member="Batches" ThisKey="id" OtherKey="indexedBy" Type="Batch" />
+      <Association Name="User_Batch1" Member="Batches1" ThisKey="id" OtherKey="qaBy" Type="Batch" />
+      <Association Name="User_AuditLog" Member="AuditLogs" ThisKey="id" OtherKey="performedBy" Type="AuditLog" />
+      <Association Name="User_AssetsAssignment" Member="AssetsAssignments" ThisKey="id" OtherKey="deliveredBy" Type="AssetsAssignment" />
+      <Association Name="User_AssetsAssignment1" Member="AssetsAssignments1" ThisKey="id" OtherKey="assignedBy" Type="AssetsAssignment" />
+      <Association Name="User_ConsumableDistribution" Member="ConsumableDistributions" ThisKey="id" OtherKey="assignedBy" Type="ConsumableDistribution" />
+      <Association Name="User_ConsumableDistribution1" Member="ConsumableDistributions1" ThisKey="id" OtherKey="deliveredBy" Type="ConsumableDistribution" />
+      <Association Name="User_SalaryEffect" Member="SalaryEffects" ThisKey="id" OtherKey="userId" Type="SalaryEffect" />
+      <Association Name="Company_User" Member="Company" ThisKey="companyId" OtherKey="id" Type="Company" IsForeignKey="true" />
+      <Association Name="GovernmentalEntity_User" Member="GovernmentalEntity" ThisKey="governmentalEntityId" OtherKey="id" Type="GovernmentalEntity" IsForeignKey="true" />
+      <Association Name="Group_User" Member="Group" ThisKey="groupId" OtherKey="id" Type="Group" IsForeignKey="true" />
+      <Association Name="Status_User" Member="Status" ThisKey="statusId" OtherKey="id" Type="Status" IsForeignKey="true" />
+      <Association Name="UnitStructure_User" Member="UnitStructure" ThisKey="unitStructureId" OtherKey="id" Type="UnitStructure" IsForeignKey="true" />
+      <Association Name="Project_User" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Batches" Member="Batches">
+    <Type Name="Batch">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="unitStructureId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="code" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="barcode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="indexedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="indexed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="qaBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="qa" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Batch_BoxFile" Member="BoxFiles" ThisKey="id" OtherKey="batchId" Type="BoxFile" />
+      <Association Name="UnitStructure_Batch" Member="UnitStructure" ThisKey="unitStructureId" OtherKey="id" Type="UnitStructure" IsForeignKey="true" />
+      <Association Name="User_Batch" Member="User" ThisKey="indexedBy" OtherKey="id" Type="User" IsForeignKey="true" />
+      <Association Name="User_Batch1" Member="User1" ThisKey="qaBy" OtherKey="id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Persons" Member="Persons">
+    <Type Name="Person">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Person_FileDocument" Member="FileDocuments" ThisKey="id" OtherKey="senderId" Type="FileDocument" />
+      <Association Name="Person_FileDocument1" Member="FileDocuments1" ThisKey="id" OtherKey="receiverId" Type="FileDocument" />
+      <Association Name="Status_Person" Member="Status" ThisKey="statusId" OtherKey="id" Type="Status" IsForeignKey="true" />
+      <Association Name="Project_Person" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Parties" Member="Parties">
+    <Type Name="Party">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Party_FileDocument" Member="FileDocuments" ThisKey="id" OtherKey="receivingPartyId" Type="FileDocument" />
+      <Association Name="Party_FileDocument1" Member="FileDocuments1" ThisKey="id" OtherKey="sendingPartyId" Type="FileDocument" />
+      <Association Name="Status_Party" Member="Status" ThisKey="statusId" OtherKey="id" Type="Status" IsForeignKey="true" />
+      <Association Name="Project_Party" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditLog" Member="AuditLogs">
+    <Type Name="AuditLog">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tableName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="activityId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="objectId" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="occurredAt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="performedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="fieldName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="oldValue" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="newValue" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="companyId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Association Name="ActivityType_AuditLog" Member="ActivityType" ThisKey="activityId" OtherKey="id" Type="ActivityType" IsForeignKey="true" />
+      <Association Name="Company_AuditLog" Member="Company" ThisKey="companyId" OtherKey="id" Type="Company" IsForeignKey="true" />
+      <Association Name="User_AuditLog" Member="User" ThisKey="performedBy" OtherKey="id" Type="User" IsForeignKey="true" />
+      <Association Name="Project_AuditLog" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AssetsAssignments" Member="AssetsAssignments">
+    <Type Name="AssetsAssignment">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="assetsId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="assignedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="assignmentDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="deliveredBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="deliveryDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="User_AssetsAssignment" Member="User" ThisKey="deliveredBy" OtherKey="id" Type="User" IsForeignKey="true" />
+      <Association Name="Asset_AssetsAssignment" Member="Asset" ThisKey="assetsId" OtherKey="id" Type="Asset" IsForeignKey="true" />
+      <Association Name="User_AssetsAssignment1" Member="User1" ThisKey="assignedBy" OtherKey="id" Type="User" IsForeignKey="true" />
+      <Association Name="Project_AssetsAssignment" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ConsumableDistributions" Member="ConsumableDistributions">
+    <Type Name="ConsumableDistribution">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="consumableId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="assignedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="assignmentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deliveredBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="deliveryDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="User_ConsumableDistribution" Member="User" ThisKey="assignedBy" OtherKey="id" Type="User" IsForeignKey="true" />
+      <Association Name="User_ConsumableDistribution1" Member="User1" ThisKey="deliveredBy" OtherKey="id" Type="User" IsForeignKey="true" />
+      <Association Name="Consumable_ConsumableDistribution" Member="Consumable" ThisKey="consumableId" OtherKey="id" Type="Consumable" IsForeignKey="true" />
+      <Association Name="Project_ConsumableDistribution" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Consumables" Member="Consumables">
+    <Type Name="Consumable">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="companyId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="typeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Consumable_ConsumableDistribution" Member="ConsumableDistributions" ThisKey="id" OtherKey="consumableId" Type="ConsumableDistribution" />
+      <Association Name="Company_Consumable" Member="Company" ThisKey="companyId" OtherKey="id" Type="Company" IsForeignKey="true" />
+      <Association Name="ConsumableType_Consumable" Member="ConsumableType" ThisKey="typeId" OtherKey="id" Type="ConsumableType" IsForeignKey="true" />
+      <Association Name="Status_Consumable" Member="Status" ThisKey="statusId" OtherKey="id" Type="Status" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FileDocumentKeywords" Member="FileDocumentKeywords">
+    <Type Name="FileDocumentKeyword">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="fileDocumentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="keyword" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Association Name="FileDocument_FileDocumentKeyword" Member="FileDocument" ThisKey="fileDocumentId" OtherKey="id" Type="FileDocument" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FileDocumentReferences" Member="FileDocumentReferences">
+    <Type Name="FileDocumentReference">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="fileDocumentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="referenceId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="code" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="FileDocument_FileDocumentReference" Member="FileDocument" ThisKey="fileDocumentId" OtherKey="id" Type="FileDocument" IsForeignKey="true" />
+      <Association Name="BusinessReference_FileDocumentReference" Member="BusinessReference" ThisKey="referenceId" OtherKey="id" Type="BusinessReference" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BusinessReferences" Member="BusinessReferences">
+    <Type Name="BusinessReference">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="BusinessReference_FileDocumentReference" Member="FileDocumentReferences" ThisKey="id" OtherKey="referenceId" Type="FileDocumentReference" />
+      <Association Name="Status_BusinessReference" Member="Status" ThisKey="statusId" OtherKey="id" Type="Status" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Categories" Member="Categories">
+    <Type Name="Category">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="code" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="parentId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="notes" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Category_FileDocument" Member="FileDocuments" ThisKey="id" OtherKey="categoryId" Type="FileDocument" />
+      <Association Name="Project_Category" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DocTypes" Member="DocTypes">
+    <Type Name="DocType">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="DocType_FileDocument" Member="FileDocuments" ThisKey="id" OtherKey="docTypeId" Type="FileDocument" />
+      <Association Name="Status_DocType" Member="Status" ThisKey="statusId" OtherKey="id" Type="Status" IsForeignKey="true" />
+      <Association Name="Project_DocType" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProjectTarget" Member="ProjectTargets">
+    <Type Name="ProjectTarget">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="stateTransitionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="count" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="timeMeasurement" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
+      <Column Name="startDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="reachTarget" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
+      <Column Name="overTarget" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
+      <Column Name="error" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="isActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="StatesTransition_ProjectTarget" Member="StatesTransition" ThisKey="stateTransitionId" OtherKey="id" Type="StatesTransition" IsForeignKey="true" />
+      <Association Name="Status_ProjectTarget" Member="Status" ThisKey="statusId" OtherKey="id" Type="Status" IsForeignKey="true" />
+      <Association Name="Project_ProjectTarget" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SalaryEffects" Member="SalaryEffects">
+    <Type Name="SalaryEffect">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="projectId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="userId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="salaryEffectTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="reason" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="timeFrom" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="timeTo" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Status_SalaryEffect" Member="Status" ThisKey="statusId" OtherKey="id" Type="Status" IsForeignKey="true" />
+      <Association Name="User_SalaryEffect" Member="User" ThisKey="userId" OtherKey="id" Type="User" IsForeignKey="true" />
+      <Association Name="SalaryEffectType_SalaryEffect" Member="SalaryEffectType" ThisKey="salaryEffectTypeId" OtherKey="id" Type="SalaryEffectType" IsForeignKey="true" />
+      <Association Name="Project_SalaryEffect" Member="Project" ThisKey="projectId" OtherKey="id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SalaryEffectTypes" Member="SalaryEffectTypes">
+    <Type Name="SalaryEffectType">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="SalaryEffectType_SalaryEffect" Member="SalaryEffects" ThisKey="id" OtherKey="salaryEffectTypeId" Type="SalaryEffect" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Projects" Member="Projects">
+    <Type Name="Project">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="governmentalEntityId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="companyId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="startDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="period" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="deliveryDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="noOfPages" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="statusId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Project_Issue" Member="Issues" ThisKey="id" OtherKey="projectId" Type="Issue" />
+      <Association Name="Project_ProjectStateTransition" Member="ProjectStateTransitions" ThisKey="id" OtherKey="projectId" Type="ProjectStateTransition" />
+      <Association Name="Project_WorkSite" Member="WorkSites" ThisKey="id" OtherKey="projectId" Type="WorkSite" />
+      <Association Name="Project_ProjectPrerequisite" Member="ProjectPrerequisites" ThisKey="id" OtherKey="projectId" Type="ProjectPrerequisite" />
+      <Association Name="Project_Stock" Member="Stocks" ThisKey="id" OtherKey="projectId" Type="Stock" />
+      <Association Name="Project_Asset" Member="Assets" ThisKey="id" OtherKey="projectId" Type="Asset" />
+      <Association Name="Project_User" Member="Users" ThisKey="id" OtherKey="projectId" Type="User" />
+      <Association Name="Project_Person" Member="Persons" ThisKey="id" OtherKey="projectId" Type="Person" />
+      <Association Name="Project_Party" Member="Parties" ThisKey="id" OtherKey="projectId" Type="Party" />
+      <Association Name="Project_AuditLog" Member="AuditLogs" ThisKey="id" OtherKey="projectId" Type="AuditLog" />
+      <Association Name="Project_AssetsAssignment" Member="AssetsAssignments" ThisKey="id" OtherKey="projectId" Type="AssetsAssignment" />
+      <Association Name="Project_ConsumableDistribution" Member="ConsumableDistributions" ThisKey="id" OtherKey="projectId" Type="ConsumableDistribution" />
+      <Association Name="Project_Category" Member="Categories" ThisKey="id" OtherKey="projectId" Type="Category" />
+      <Association Name="Project_DocType" Member="DocTypes" ThisKey="id" OtherKey="projectId" Type="DocType" />
+      <Association Name="Project_ProjectTarget" Member="ProjectTargets" ThisKey="id" OtherKey="projectId" Type="ProjectTarget" />
+      <Association Name="Project_SalaryEffect" Member="SalaryEffects" ThisKey="id" OtherKey="projectId" Type="SalaryEffect" />
+      <Association Name="GovernmentalEntity_Project" Member="GovernmentalEntity" ThisKey="governmentalEntityId" OtherKey="id" Type="GovernmentalEntity" IsForeignKey="true" />
+      <Association Name="Company_Project" Member="Company" ThisKey="companyId" OtherKey="id" Type="Company" IsForeignKey="true" />
+      <Association Name="Status_Project" Member="Status" ThisKey="statusId" OtherKey="id" Type="Status" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Settings" Member="Settings">
+    <Type Name="Setting">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="value" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="unit" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dataType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.SP_SelectPrerequisitesPermission" Method="SP_SelectPrerequisitesPermission">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_SelectPrerequisitesPermissionResult">
+      <Column Name="processPrerequisiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_SelectStateTransitionPermission" Method="SP_SelectStateTransitionPermission">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_SelectStateTransitionPermissionResult">
+      <Column Name="StateID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StateName" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="Done" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="Restart" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.fn_OverallProgress" Method="fn_OverallProgress" IsComposable="true">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.String" />
+  </Function>
+  <Function Name="dbo.fn_CalcStateProgressByProjectForOverall" Method="fn_CalcStateProgressByProjectForOverall" IsComposable="true">
+    <Parameter Name="stateId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="projectId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="pages" Type="System.Double" DbType="Float" />
+    <Parameter Name="object" Type="System.Int32" DbType="Int" />
+    <Parameter Name="relativeWeight" Type="System.Double" DbType="Float" />
+    <Return Type="System.String" />
+  </Function>
+  <Function Name="dbo.fn_ProjectProgress" Method="fn_ProjectProgress" IsComposable="true">
+    <Parameter Name="ProjectId" Parameter="projectId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ProjectPages" Parameter="projectPages" Type="System.Int32" DbType="Int" />
+    <Return Type="System.String" />
+  </Function>
+  <Function Name="dbo.fn_CalcStateProgressByUnit" Method="fn_CalcStateProgressByUnit" IsComposable="true">
+    <Parameter Name="stateId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="unitId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="object" Type="System.Int32" DbType="Int" />
+    <Parameter Name="from" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="to" Type="System.DateTime" DbType="Date" />
+    <Return Type="System.Decimal" />
+  </Function>
+  <Function Name="dbo.fn_CalcStateProgressByProject" Method="fn_CalcStateProgressByProject" IsComposable="true">
+    <Parameter Name="stateId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="projectId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="pages" Type="System.Double" DbType="Float" />
+    <Parameter Name="object" Type="System.Int32" DbType="Int" />
+    <Parameter Name="relativeWeight" Type="System.Double" DbType="Float" />
+    <Parameter Name="from" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="to" Type="System.DateTime" DbType="Date" />
+    <Return Type="System.String" />
+  </Function>
+  <Function Name="dbo.SP_CalcStateProgressByUnitGroupByDate" Method="SP_CalcStateProgressByUnitGroupByDate">
+    <Parameter Name="stateId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="unitId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="object" Type="System.Int32" DbType="Int" />
+    <Parameter Name="from" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="to" Type="System.DateTime" DbType="Date" />
+    <ElementType Name="SP_CalcStateProgressByUnitGroupByDateResult">
+      <Column Name="progess" Type="System.Decimal" DbType="Decimal(38,9)" CanBeNull="true" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_UnitStructure" Method="SP_UnitStructure">
+    <Parameter Name="governmentalEntityId" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_UnitStructureResult">
+      <Column Name="name" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RecursionLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CategoriesTree" Method="SP_CategoriesTree">
+    <ElementType Name="SP_CategoriesTreeResult">
+      <Column Name="Category_Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CategoriesTreeByProject" Method="SP_CategoriesTreeByProject">
+    <Parameter Name="project" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_CategoriesTreeByProjectResult">
+      <Column Name="Category_Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_SelectUserPermission" Method="SP_SelectUserPermission">
+    <Parameter Name="GroupId" Parameter="groupId" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_SelectUserPermissionResult">
+      <Column Name="moduleId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="module" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="form" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="url" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="parentForm" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="[read]" Member="read" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[create]" Member="create" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[update]" Member="update" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="remove" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[index]" Member="index" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="qa" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="export" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[print]" Member="print" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="approve" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="freeze" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>

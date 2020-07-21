@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report Width="16cm" Name="rptBoxfile" xmlns="http://schemas.telerik.com/reporting/2012/3.8">
+  <Items>
+    <DetailSection Height="21.3452749961604cm" Name="detailSection1">
+      <Style>
+        <BorderStyle Top="Solid" Bottom="Solid" Left="Solid" Right="Solid" />
+        <BorderColor Top="Black" Bottom="Black" Left="Black" Right="Black" />
+        <BorderWidth Top="1pt" Bottom="1pt" Left="1pt" Right="1pt" />
+      </Style>
+      <Items>
+        <Barcode Width="10.69999904116cm" Height="2.49999994953474cm" Left="2.60000003364351cm" Top="1.49999991589123cm" Value="= Parameters.barcode.Value" Stretch="False" Name="barcode1">
+          <Style TextAlign="Center" VerticalAlign="Bottom">
+            <Font Size="15pt" Bold="True" />
+          </Style>
+          <Encoder>
+            <Code128Encoder />
+          </Encoder>
+        </Barcode>
+        <Panel Width="15.9998002245747cm" Height="13.9757066272499cm" Left="0.00009994917167155cm" Top="4.20000111023582cm" Name="panel1">
+          <Style>
+            <BorderStyle Top="Dashed" Bottom="Dashed" />
+            <BorderColor Top="Black" Bottom="Black" />
+            <BorderWidth Top="1pt" Bottom="1pt" />
+          </Style>
+          <Items>
+            <TextBox Width="4.19999976449543cm" Height="1.00000030279159cm" Left="11.4998995909454cm" Top="0.200000168217548cm" Value="الوزارة | الوحدة التنظيمية:" Name="textBox2">
+              <Style VerticalAlign="Middle">
+                <BorderStyle Left="Solid" />
+                <BorderColor Left="Black" />
+                <BorderWidth Left="1pt" />
+                <Font Size="13pt" Bold="True" />
+              </Style>
+            </TextBox>
+            <TextBox Width="4.19999992688496cm" Height="1.00000035762787cm" Left="11.4998995909454cm" Top="1.2002007171787cm" Value="عنوان الملف:" Name="textBox3">
+              <Style VerticalAlign="Middle">
+                <BorderStyle Left="Solid" />
+                <BorderColor Left="Black" />
+                <BorderWidth Left="1pt" />
+                <Font Size="13pt" Bold="True" />
+              </Style>
+            </TextBox>
+            <TextBox Width="4.19999992688496cm" Height="1.00000035762787cm" Left="11.4998992697398cm" Top="2.20040130615234cm" Value="مرجع الملف:" Name="textBox4">
+              <Style VerticalAlign="Middle">
+                <BorderStyle Left="Solid" />
+                <BorderColor Left="Black" />
+                <BorderWidth Left="1pt" />
+                <Font Size="13pt" Bold="True" />
+              </Style>
+            </TextBox>
+            <TextBox Width="4.19999992688496cm" Height="1.00000035762787cm" Left="11.4998995909454cm" Top="3.20060181510099cm" Value="عدد الورق:" Name="textBox5">
+              <Style VerticalAlign="Middle">
+                <BorderStyle Left="Solid" />
+                <BorderColor Left="Black" />
+                <BorderWidth Left="1pt" />
+                <Font Size="13pt" Bold="True" />
+              </Style>
+            </TextBox>
+            <TextBox Width="4.19999992688496cm" Height="1.00000035762787cm" Left="11.4998995909454cm" Top="4.20080236406214cm" Value="السرية:" Name="textBox6">
+              <Style VerticalAlign="Middle">
+                <BorderStyle Left="Solid" />
+                <BorderColor Left="Black" />
+                <BorderWidth Left="1pt" />
+                <Font Size="13pt" Bold="True" />
+              </Style>
+            </TextBox>
+            <TextBox Width="4.19999980926514cm" Height="1.00000035762787cm" Left="11.4998995909454cm" Top="6.90222116133022cm" Value="حالة الملف الورقى:" Name="textBox7">
+              <Style VerticalAlign="Middle">
+                <BorderStyle Left="Solid" />
+                <BorderColor Left="Black" />
+                <BorderWidth Left="1pt" />
+                <Font Size="13pt" Bold="True" />
+              </Style>
+            </TextBox>
+            <TextBox Width="4.19999980926514cm" Height="1.00000035762787cm" Left="11.4998995909454cm" Top="9.63871479774447cm" Value="الاجراء المطلوب:" Name="textBox8">
+              <Style VerticalAlign="Middle">
+                <BorderStyle Left="Solid" />
+                <BorderColor Left="Black" />
+                <BorderWidth Left="1pt" />
+                <Font Size="13pt" Bold="True" />
+              </Style>
+            </TextBox>
+            <Table Width="7.19999963208261cm" Height="4.14041658235169cm" Left="4.19990017970681cm" Top="9.63871372115216cm" Name="table1">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="2" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="6.30988908949321cm" Height="0.870416735585642cm" Left="0cm" Top="0cm" Value="اتلاف الملف" Name="textBox13" StyleName="">
+                        <Style VerticalAlign="Middle">
+                          <BorderStyle Bottom="Solid" />
+                          <BorderColor Bottom="Black" />
+                          <BorderWidth Bottom="1pt" />
+                          <Font Size="12pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="2" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.890110542589402cm" Height="0.870416735585642cm" Left="0cm" Top="0cm" Name="textBox14" StyleName="">
+                        <Style>
+                          <BorderStyle Bottom="Solid" Left="Solid" />
+                          <BorderColor Bottom="Black" Left="Black" />
+                          <BorderWidth Bottom="1pt" Left="1pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="3" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="6.30988908949321cm" Height="0.76458297185783cm" Left="0cm" Top="0cm" Value="ينقل الملف الالكتروني الى العاصمة" Name="textBox15" StyleName="">
+                        <Style VerticalAlign="Middle">
+                          <BorderStyle Bottom="Solid" />
+                          <BorderColor Bottom="Black" />
+                          <BorderWidth Bottom="1pt" />
+                          <Font Size="12pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="3" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.890110542589402cm" Height="0.76458297185783cm" Left="0cm" Top="0cm" Name="textBox16" StyleName="">
+                        <Style>
+                          <BorderStyle Bottom="Solid" Left="Solid" />
+                          <BorderColor Bottom="Black" Left="Black" />
+                          <BorderWidth Bottom="1pt" Left="1pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="4" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="6.30988908949321cm" Height="0.817499946267258cm" Left="0cm" Top="0cm" Value="يفحص لا حقا" Name="textBox17" StyleName="">
+                        <Style VerticalAlign="Middle">
+                          <Font Size="12pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="4" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.890110542589402cm" Height="0.817499946267258cm" Left="0cm" Top="0cm" Name="textBox18" StyleName="">
+                        <Style>
+                          <BorderStyle Left="Solid" />
+                          <BorderColor Left="Black" />
+                          <BorderWidth Left="1pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="6.30988908949321cm" Height="0.764583403736934cm" Left="0cm" Top="0cm" Value="نقل الملف الورقي الى العاصمة" Name="textBox9" StyleName="">
+                        <Style VerticalAlign="Middle">
+                          <BorderStyle Bottom="Solid" />
+                          <BorderColor Bottom="Black" />
+                          <BorderWidth Bottom="1pt" />
+                          <Font Size="12pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.890110542589402cm" Height="0.764583403736934cm" Left="0cm" Top="0cm" Name="textBox11" StyleName="">
+                        <Style>
+                          <BorderStyle Bottom="Solid" Left="Solid" />
+                          <BorderColor Bottom="Black" Left="Black" />
+                          <BorderWidth Bottom="1pt" Left="1pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="6.30988908949321cm" Height="0.923333524904025cm" Left="0cm" Top="0cm" Value="نقل الملف الورقي الى المستودعات المركزية" Name="textBox10" StyleName="">
+                        <Style VerticalAlign="Middle">
+                          <BorderStyle Bottom="Solid" />
+                          <BorderColor Bottom="Black" />
+                          <BorderWidth Bottom="1pt" />
+                          <Font Size="12pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.890110542589402cm" Height="0.923333524904025cm" Left="0cm" Top="0cm" Name="textBox12" StyleName="">
+                        <Style>
+                          <BorderStyle Bottom="Solid" Left="Solid" />
+                          <BorderColor Bottom="Black" Left="Black" />
+                          <BorderWidth Bottom="1pt" Left="1pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="6.30988908949321cm" />
+                  <Column Width="0.89011059623358cm" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.764583403736934cm" />
+                  <Row Height="0.923333524904025cm" />
+                  <Row Height="0.870416735585642cm" />
+                  <Row Height="0.76458297185783cm" />
+                  <Row Height="0.817499946267258cm" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style>
+                <BorderStyle Top="Solid" Bottom="Solid" Left="Solid" Right="Solid" />
+                <BorderColor Top="Black" Bottom="Black" Left="Black" Right="Black" />
+                <BorderWidth Top="1pt" Bottom="1pt" Left="1pt" Right="1pt" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="detailTableGroup">
+                  <ChildGroups>
+                    <TableGroup Name="group4" />
+                    <TableGroup Name="group" />
+                    <TableGroup Name="group1" />
+                    <TableGroup Name="group2" />
+                    <TableGroup Name="group3" />
+                  </ChildGroups>
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup Name="tableGroup" />
+                <TableGroup Name="tableGroup1" />
+              </ColumnGroups>
+            </Table>
+            <Table Width="7.19999964833259cm" Height="2.55833343241663cm" Left="4.19990044885488cm" Top="6.90222116133022cm" Name="table2">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="2" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="6.30988931655884cm" Height="0.870416760444641cm" Left="0cm" Top="0cm" Value="تحتاج لترميم" Name="textBox19" StyleName="">
+                        <Style VerticalAlign="Middle">
+                          <BorderStyle Bottom="Solid" />
+                          <BorderColor Bottom="Black" />
+                          <BorderWidth Bottom="1pt" />
+                          <Font Size="12pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="2" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.890110552310944cm" Height="0.870416760444641cm" Left="0cm" Top="0cm" Name="textBox20" StyleName="">
+                        <Style>
+                          <BorderStyle Bottom="Solid" Left="Solid" />
+                          <BorderColor Bottom="Black" Left="Black" />
+                          <BorderWidth Bottom="1pt" Left="1pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="6.30988931655884cm" Height="0.76458340883255cm" Left="0cm" Top="0cm" Value="جيدة" Name="textBox25" StyleName="">
+                        <Style VerticalAlign="Middle">
+                          <BorderStyle Bottom="Solid" />
+                          <BorderColor Bottom="Black" />
+                          <BorderWidth Bottom="1pt" />
+                          <Font Size="12pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.890110552310944cm" Height="0.76458340883255cm" Left="0cm" Top="0cm" Name="textBox26" StyleName="">
+                        <Style>
+                          <BorderStyle Bottom="Solid" Left="Solid" />
+                          <BorderColor Bottom="Black" Left="Black" />
+                          <BorderWidth Bottom="1pt" Left="1pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="6.30988931655884cm" Height="0.923333525657654cm" Left="0cm" Top="0cm" Value="جيدة لحد ما" Name="textBox27" StyleName="">
+                        <Style VerticalAlign="Middle">
+                          <BorderStyle Bottom="Solid" />
+                          <BorderColor Bottom="Black" />
+                          <BorderWidth Bottom="1pt" />
+                          <Font Size="12pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.890110552310944cm" Height="0.923333525657654cm" Left="0cm" Top="0cm" Name="textBox28" StyleName="">
+                        <Style>
+                          <BorderStyle Bottom="Solid" Left="Solid" />
+                          <BorderColor Bottom="Black" Left="Black" />
+                          <BorderWidth Bottom="1pt" Left="1pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="6.30988910373426cm" />
+                  <Column Width="0.890110705530863cm" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.76458333537821cm" />
+                  <Row Height="0.923333452142829cm" />
+                  <Row Height="0.870416644895586cm" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style>
+                <BorderStyle Top="Solid" Bottom="Solid" Left="Solid" Right="Solid" />
+                <BorderColor Top="Black" Bottom="Black" Left="Black" Right="Black" />
+                <BorderWidth Top="1pt" Bottom="1pt" Left="1pt" Right="1pt" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="detailTableGroup">
+                  <ChildGroups>
+                    <TableGroup Name="group4" />
+                    <TableGroup Name="group" />
+                    <TableGroup Name="group1" />
+                  </ChildGroups>
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup Name="tableGroup" />
+                <TableGroup Name="tableGroup1" />
+              </ColumnGroups>
+            </Table>
+            <Table Width="7.19999980926514cm" Height="2.55833339691162cm" Left="4.19989991055873cm" Top="4.20080236406214cm" Name="table3">
+              <Body>
+                <Cells>
+                  <TableCell RowIndex="2" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="6.30988931655884cm" Height="0.870416760444641cm" Left="0cm" Top="0cm" Value="سري جداً" Name="textBox21" StyleName="">
+                        <Style VerticalAlign="Middle">
+                          <BorderStyle Bottom="Solid" />
+                          <BorderColor Bottom="Black" />
+                          <BorderWidth Bottom="1pt" />
+                          <Font Size="12pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="2" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.890110552310944cm" Height="0.870416760444641cm" Left="0cm" Top="0cm" Name="textBox22" StyleName="">
+                        <Style>
+                          <BorderStyle Bottom="Solid" Left="Solid" />
+                          <BorderColor Bottom="Black" Left="Black" />
+                          <BorderWidth Bottom="1pt" Left="1pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="6.30988931655884cm" Height="0.76458340883255cm" Left="0cm" Top="0cm" Value="غير سري" Name="textBox23" StyleName="">
+                        <Style VerticalAlign="Middle">
+                          <BorderStyle Bottom="Solid" />
+                          <BorderColor Bottom="Black" />
+                          <BorderWidth Bottom="1pt" />
+                          <Font Size="12pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.890110552310944cm" Height="0.76458340883255cm" Left="0cm" Top="0cm" Name="textBox24" StyleName="">
+                        <Style>
+                          <BorderStyle Bottom="Solid" Left="Solid" />
+                          <BorderColor Bottom="Black" Left="Black" />
+                          <BorderWidth Bottom="1pt" Left="1pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="6.30988931655884cm" Height="0.923333525657654cm" Left="0cm" Top="0cm" Value="سري" Name="textBox29" StyleName="">
+                        <Style VerticalAlign="Middle">
+                          <BorderStyle Bottom="Solid" />
+                          <BorderColor Bottom="Black" />
+                          <BorderWidth Bottom="1pt" />
+                          <Font Size="12pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                  <TableCell RowIndex="1" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                    <ReportItem>
+                      <TextBox Width="0.890110552310944cm" Height="0.923333525657654cm" Left="0cm" Top="0cm" Name="textBox30" StyleName="">
+                        <Style>
+                          <BorderStyle Bottom="Solid" Left="Solid" />
+                          <BorderColor Bottom="Black" Left="Black" />
+                          <BorderWidth Bottom="1pt" Left="1pt" />
+                        </Style>
+                      </TextBox>
+                    </ReportItem>
+                  </TableCell>
+                </Cells>
+                <Columns>
+                  <Column Width="6.30988881561785cm" />
+                  <Column Width="0.89011067178221cm" />
+                </Columns>
+                <Rows>
+                  <Row Height="0.764583401011464cm" />
+                  <Row Height="0.923333515572921cm" />
+                  <Row Height="0.870416480327236cm" />
+                </Rows>
+              </Body>
+              <Corner />
+              <Style>
+                <BorderStyle Top="Solid" Bottom="Solid" Left="Solid" Right="Solid" />
+                <BorderColor Top="Black" Bottom="Black" Left="Black" Right="Black" />
+                <BorderWidth Top="1pt" Bottom="1pt" Left="1pt" Right="1pt" />
+              </Style>
+              <RowGroups>
+                <TableGroup Name="detailTableGroup">
+                  <ChildGroups>
+                    <TableGroup Name="group4" />
+                    <TableGroup Name="group" />
+                    <TableGroup Name="group1" />
+                  </ChildGroups>
+                  <Groupings>
+                    <Grouping />
+                  </Groupings>
+                </TableGroup>
+              </RowGroups>
+              <ColumnGroups>
+                <TableGroup Name="tableGroup" />
+                <TableGroup Name="tableGroup1" />
+              </ColumnGroups>
+            </Table>
+            <TextBox Width="6.30988931655884cm" Height="1.00000023425453cm" Left="5.09001001399065cm" Top="0.200000168217548cm" Value="= Parameters.minister.Value" Name="textBox31" StyleName="">
+              <Style VerticalAlign="Middle">
+                <BorderStyle Bottom="None" Left="None" />
+                <BorderColor Bottom="Black" Left="Black" />
+                <BorderWidth Bottom="1pt" Left="1pt" />
+                <Font Size="12pt" />
+              </Style>
+            </TextBox>
+            <TextBox Width="4.19999980926514cm" Height="1.70101798968663cm" Left="11.4998995909454cm" Top="5.20100291302328cm" Value="" Name="textBox32">
+              <Style VerticalAlign="Middle">
+                <BorderStyle Left="Solid" />
+                <BorderColor Left="Black" />
+                <BorderWidth Left="1pt" />
+                <Font Size="13pt" Bold="True" />
+              </Style>
+            </TextBox>
+            <TextBox Width="4.19999980926514cm" Height="1.73609227665721cm" Left="11.4998995909454cm" Top="7.90242171029136cm" Value="" Name="textBox33">
+              <Style VerticalAlign="Middle">
+                <BorderStyle Left="Solid" />
+                <BorderColor Left="Black" />
+                <BorderWidth Left="1pt" />
+                <Font Size="13pt" Bold="True" />
+              </Style>
+            </TextBox>
+            <TextBox Width="4.19999980926514cm" Height="3.14021518783683cm" Left="11.4998995909454cm" Top="10.6389153467056cm" Value="" Name="textBox34">
+              <Style VerticalAlign="Middle">
+                <BorderStyle Left="Solid" />
+                <BorderColor Left="Black" />
+                <BorderWidth Left="1pt" />
+                <Font Size="13pt" Bold="True" />
+              </Style>
+            </TextBox>
+          </Items>
+        </Panel>
+        <TextBox Width="12.4000000729826cm" Height="0.99999988079071cm" Left="1.79999989906947cm" Top="0.400000067287019cm" Value="مشروع توثيق ملفات الوزارات | شهادة ملف ورقي" Name="textBox1">
+          <Style TextAlign="Center" VerticalAlign="Middle">
+            <BorderStyle Bottom="Solid" />
+            <BorderColor Bottom="Black" />
+            <BorderWidth Bottom="1pt" />
+            <Font Size="20pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="1.59999923732547cm" Height="1.00000035762787cm" Left="14.1000002859698cm" Top="18.4999986037943cm" Value="الاسم/" Name="textBox35">
+          <Style VerticalAlign="Middle">
+            <BorderStyle Left="None" />
+            <BorderColor Left="Black" />
+            <BorderWidth Left="1pt" />
+            <Font Size="13pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="1.59999918937683cm" Height="1.00000035762787cm" Left="8.39999952899086cm" Top="18.4999986037943cm" Value="التوقيع/" Name="textBox36">
+          <Style VerticalAlign="Middle">
+            <BorderStyle Left="None" />
+            <BorderColor Left="Black" />
+            <BorderWidth Left="1pt" />
+            <Font Size="13pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="1.59999918937683cm" Height="1.00000035762787cm" Left="2.60000003364351cm" Top="18.500000756979cm" Value="التاريخ/" Name="textBox37">
+          <Style VerticalAlign="Middle">
+            <BorderStyle Left="None" />
+            <BorderColor Left="Black" />
+            <BorderWidth Left="1pt" />
+            <Font Size="13pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </DetailSection>
+  </Items>
+  <StyleSheet>
+    <StyleRule>
+      <Style>
+        <Padding Left="2pt" Right="2pt" />
+      </Style>
+      <Selectors>
+        <TypeSelector Type="TextItemBase" />
+        <TypeSelector Type="HtmlTextBox" />
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <PageSettings>
+    <PageSettings PaperKind="A4" Landscape="False" ColumnCount="1" ColumnSpacing="0cm">
+      <Margins>
+        <MarginsU Left="2cm" Right="2cm" Top="2cm" Bottom="2cm" />
+      </Margins>
+    </PageSettings>
+  </PageSettings>
+  <ReportParameters>
+    <ReportParameter Name="barcode" />
+    <ReportParameter Name="minister" />
+  </ReportParameters>
+</Report>

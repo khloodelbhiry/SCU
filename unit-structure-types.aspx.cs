@@ -1,0 +1,268 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+
+public partial class unit_structure_types : System.Web.UI.Page
+{
+    public SortDirection dir
+    {
+        get
+        {
+            if (ViewState["dirState"] == null)
+            {
+                ViewState["dirState"] = SortDirection.Ascending;
+            }
+            return (SortDirection)ViewState["dirState"];
+        }
+        set
+        {
+            ViewState["dirState"] = value;
+        }
+    }
+    private DataTable dtData
+    {
+        get
+        {
+            return ((DataTable)Session["_dtSelectedData"]);
+        }
+        set
+        {
+            if (value == null)
+            {
+                Session.Remove("_dtSelectedData");
+            }
+            else
+            {
+                Session["_dtSelectedData"] = value;
+            }
+        }
+    }
+    public List<UserPermissions> UserPermissions
+    {
+        get
+        {
+            if (Session["UserPermissions"] != null && Session["UserPermissions"].ToString() != string.Empty)
+                return global::UserPermissions.DeSerializePermissionsList(Session["UserPermissions"].ToString());
+            return new List<UserPermissions>();
+        }
+        set { Session["UserPermissions"] = global::UserPermissions.SerializePermissionsList(value); }
+    }
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            HtmlAnchor lnkHistory = (HtmlAnchor)Master.FindControl("lnkHistory");
+            lnkHistory.HRef = "log.aspx?t=" + EncryptString.Encrypt("UnitStructureTypes");
+            if (Session["User"] != null && Session["User"].ToString() != string.Empty)
+            {
+                if (UserPermissions.Any(
+                    p =>
+                        p.PageUrl.ToLower().Equals(Common.UnitStructureTypesPath) &&
+                        (p.Show.Equals(true) || p.Add.Equals(true) || p.Edit.Equals(true) || p.Delete.Equals(true) || p.Approve.Equals(true) || p.Freze.Equals(true))))
+                {
+                    var per = UserPermissions.FirstOrDefault(p => p.PageUrl.ToLower().Equals(Common.UnitStructureTypesPath));
+                    ((HtmlGenericControl)Page.Master.FindControl("ulBreadcrumb")).InnerHtml = "<li><i class='ace-icon fa fa-home home-icon'></i><a href ='Default.aspx'> الرئيسية </a></li><li>" + per.ModuleName + "</li><li><a class='active'>" + per.PageName + "</a></li>";
+                    Page.Title = per.PageName;
+                }
+                else
+                    Response.Redirect("no-permission.aspx");
+            }
+            else
+                Response.Redirect("Login.aspx?ReturnURL=" + Request.Url.AbsolutePath);
+            if (UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.UnitStructureTypesPath) && (p.Show.Equals(true) || p.Edit.Equals(true) || p.Delete.Equals(true) || p.Approve.Equals(true) || p.Freze.Equals(true))))
+                BindData();
+        }
+    }
+    private void BindData()
+    {
+        using (SCU_OneTrackDataContext db = new SCU_OneTrackDataContext())
+        {
+            try
+            {
+                var query = from t in db.UnitStructureTypes
+                            select new
+                            {
+                                t.id,
+                                t.name
+                            };
+                if (txtNameSrch.Text.Trim() != string.Empty)
+                    query = query.Where(x => x.name.Contains(txtNameSrch.Text.Trim()));
+                lblResult.Text = query.Count().ToString();
+                gdvData.DataSource = query;
+                gdvData.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Common.InsertException(ex.Message, ex.StackTrace,
+                          new System.IO.FileInfo(System.Web.HttpContext.Current.Request.Url.AbsolutePath).Name);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Startup", "<script language='javascript'> alert('حدث خطا اثناء الحفظ');</script>", false);
+            }
+        }
+    }
+    private void ClearControls()
+    {
+        txtName.Text = string.Empty;
+        ViewState["ID"] = null;
+    }
+    protected void btnSearch_Click(object sender, EventArgs e)
+    {
+        if (!UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.UnitStructureTypesPath) && (p.Show.Equals(true) || p.Edit.Equals(true) || p.Delete.Equals(true) || p.Approve.Equals(true) || p.Freze.Equals(true))))
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Startup", "<script language='javascript'> alert('عفوا، ليس لديك صلاحية للبحث');</script>", false);
+            return;
+        }
+        BindData();
+    }
+    protected void btnNewSearch_Click(object sender, EventArgs e)
+    {
+        if (!UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.UnitStructureTypesPath) && (p.Show.Equals(true) || p.Edit.Equals(true) || p.Delete.Equals(true) || p.Approve.Equals(true) || p.Freze.Equals(true))))
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Startup", "<script language='javascript'> alert('عفوا، ليس لديك صلاحية للبحث');</script>", false);
+            return;
+        }
+        txtNameSrch.Text = string.Empty;
+        BindData();
+    }
+    protected void lnkSave_Click(object sender, EventArgs e)
+    {
+        if (Page.IsValid)
+        {
+            using (SCU_OneTrackDataContext db = new SCU_OneTrackDataContext())
+            {
+                try
+                {
+                    if (ViewState["ID"] != null)
+                    {
+                        UnitStructureType u =
+                            db.UnitStructureTypes.FirstOrDefault(x => x.id.Equals(int.Parse(ViewState["ID"].ToString())));
+                        if (u != null)
+                        {
+                            u.name = txtName.Text;
+                            db.SubmitChanges();
+                            LogWriter.LogWrite("UnitStructureTypes", ((int)ActivitiesEnum.Update).ToString(), u.id.ToString(), DateTime.Now.ToString(), UserDetails.DeSerializeUserDetails(Session["User"].ToString()).ID.ToString(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
+                        }
+                    }
+                    else
+                    {
+                        UnitStructureType u = new UnitStructureType();
+                        u.name = txtName.Text.Trim();
+                        db.UnitStructureTypes.InsertOnSubmit(u);
+                        db.SubmitChanges();
+                        LogWriter.LogWrite("UnitStructureTypes", ((int)ActivitiesEnum.Add).ToString(), u.id.ToString(), DateTime.Now.ToString(), UserDetails.DeSerializeUserDetails(Session["User"].ToString()).ID.ToString(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
+                    }
+                    ClearControls();
+                    BindData();
+                    ScriptManager.RegisterStartupScript(this, GetType(), "alertCompany",
+                           "alert('تم الحفظ بنجاح .');", true);
+                }
+                catch (Exception ex)
+                {
+                    Common.InsertException(ex.Message, ex.StackTrace,
+                              new System.IO.FileInfo(System.Web.HttpContext.Current.Request.Url.AbsolutePath).Name);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "Startup", "<script language='javascript'> alert('حدث خطا اثناء الحفظ');</script>", false);
+                }
+            }
+        }
+    }
+    protected void gdvData_Sorting(object sender, GridViewSortEventArgs e)
+    {
+        string SortDir = string.Empty;
+        if (dir == SortDirection.Ascending)
+        {
+            dir = SortDirection.Descending;
+            SortDir = "Desc";
+        }
+        else
+        {
+            dir = SortDirection.Ascending;
+            SortDir = "Asc";
+        }
+        DataView sortedView = new DataView(dtData);
+        sortedView.Sort = e.SortExpression + " " + SortDir;
+        gdvData.DataSource = sortedView;
+        gdvData.DataBind();
+    }
+    protected void gdvData_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        gdvData.PageIndex = e.NewPageIndex;
+        BindData();
+    }
+    protected void lnkEdit_Command(object sender, CommandEventArgs e)
+    {
+        if (!UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.UnitStructureTypesPath) && p.Edit.Equals(true)))
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Startup", "<script language='javascript'> alert('عفوا، ليس لديك صلاحية للتعديل');</script>", false);
+            return;
+        }
+        using (SCU_OneTrackDataContext db = new SCU_OneTrackDataContext())
+        {
+            try
+            {
+                ViewState["ID"] = e.CommandArgument;
+                var u = (from t in db.UnitStructureTypes
+                         where t.id.Equals(int.Parse(e.CommandArgument.ToString()))
+                         select new
+                         {
+                             t.id,
+                             t.name
+                         }).FirstOrDefault();
+                if (u != null)
+                {
+                    txtName.Text = u.name;
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.InsertException(ex.Message, ex.StackTrace,
+                          new System.IO.FileInfo(System.Web.HttpContext.Current.Request.Url.AbsolutePath).Name);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Startup", "<script language='javascript'> alert('حدث خطا اثناء الحفظ');</script>", false);
+            }
+        }
+        mpeObject.Show();
+    }
+    protected void lnkDelete_Command(object sender, CommandEventArgs e)
+    {
+        if (!UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.UnitStructureTypesPath) && p.Delete.Equals(true)))
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Startup", "<script language='javascript'> alert('عفوا، ليس لديك صلاحية للحذف');</script>", false);
+            return;
+        }
+        using (SCU_OneTrackDataContext db = new SCU_OneTrackDataContext())
+        {
+            try
+            {
+                ViewState["ID"] = e.CommandArgument;
+                UnitStructureType u = db.UnitStructureTypes.FirstOrDefault(x => x.id.Equals(int.Parse(e.CommandArgument.ToString())));
+                if (u != null)
+                    db.UnitStructureTypes.DeleteOnSubmit(u);
+                db.SubmitChanges();
+                LogWriter.LogWrite("UnitStructureTypes", ((int)ActivitiesEnum.Delete).ToString(), u.id.ToString(), DateTime.Now.ToString(), UserDetails.DeSerializeUserDetails(Session["User"].ToString()).ID.ToString(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
+                BindData();
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertCompany", "alert('تم الحذف بنجاح .');", true);
+            }
+            catch (Exception ex)
+            {
+                Common.InsertException(ex.Message, ex.StackTrace,
+                          new System.IO.FileInfo(System.Web.HttpContext.Current.Request.Url.AbsolutePath).Name);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Startup", "<script language='javascript'> alert('حدث خطا اثناء الحفظ');</script>", false);
+            }
+        }
+    }
+    protected void btnAddNew_Click(object sender, EventArgs e)
+    {
+        if (!UserPermissions.Any(p => p.PageUrl.ToLower().Equals(Common.UnitStructureTypesPath) && p.Add.Equals(true)))
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Startup", "<script language='javascript'> alert('عفوا، ليس لديك صلاحية للاضافة');</script>", false);
+            return;
+        }
+        mpeObject.Show();
+    }
+    protected void lnkCloseModal_Click(object sender, EventArgs e)
+    {
+        mpeObject.Hide();
+    }
+}
