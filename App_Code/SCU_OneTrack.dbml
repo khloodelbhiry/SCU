@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SCU_OneTrack_6-7" Class="SCU_OneTrackDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=SCU_OneTrack_6-7;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="SCUConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SCU_OneTrack" Class="SCU_OneTrackDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=SCU_OneTrack;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="SCUConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.ActionsTypes" Member="ActionsTypes">
     <Type Name="ActionsType">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -112,8 +112,8 @@
       <Column Name="isIndexed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="isReviewed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="FileDocument_DocumentTransaction" Member="DocumentTransactions" ThisKey="id" OtherKey="documentId" Type="DocumentTransaction" />
-      <Association Name="FileDocument_FileDocumentKeyword" Member="FileDocumentKeywords" ThisKey="id" OtherKey="fileDocumentId" Type="FileDocumentKeyword" />
       <Association Name="FileDocument_FileDocumentReference" Member="FileDocumentReferences" ThisKey="id" OtherKey="fileDocumentId" Type="FileDocumentReference" />
+      <Association Name="FileDocument_FileDocumentKeyword" Member="FileDocumentKeywords" ThisKey="id" OtherKey="fileDocumentId" Type="FileDocumentKeyword" />
       <Association Name="BoxFile_FileDocument" Member="BoxFile" ThisKey="fileId" OtherKey="id" Type="BoxFile" IsForeignKey="true" />
       <Association Name="Person_FileDocument" Member="Person" ThisKey="senderId" OtherKey="id" Type="Person" IsForeignKey="true" />
       <Association Name="Person_FileDocument1" Member="Person1" ThisKey="receiverId" OtherKey="id" Type="Person" IsForeignKey="true" />
@@ -777,14 +777,6 @@
       <Association Name="Status_Consumable" Member="Status" ThisKey="statusId" OtherKey="id" Type="Status" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.FileDocumentKeywords" Member="FileDocumentKeywords">
-    <Type Name="FileDocumentKeyword">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="fileDocumentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="keyword" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Association Name="FileDocument_FileDocumentKeyword" Member="FileDocument" ThisKey="fileDocumentId" OtherKey="id" Type="FileDocument" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.FileDocumentReferences" Member="FileDocumentReferences">
     <Type Name="FileDocumentReference">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -911,6 +903,23 @@
       <Column Name="value" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="unit" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="dataType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FileDocumentKeywords" Member="FileDocumentKeywords">
+    <Type Name="FileDocumentKeyword">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="fileDocumentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="keyword" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="keywordId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="FileDocument_FileDocumentKeyword" Member="FileDocument" ThisKey="fileDocumentId" OtherKey="id" Type="FileDocument" IsForeignKey="true" />
+      <Association Name="Keyword_FileDocumentKeyword" Member="Keyword1" ThisKey="keywordId" OtherKey="id" Type="Keyword" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Keywords" Member="Keywords">
+    <Type Name="Keyword">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Association Name="Keyword_FileDocumentKeyword" Member="FileDocumentKeywords" ThisKey="id" OtherKey="keywordId" Type="FileDocumentKeyword" />
     </Type>
   </Table>
   <Function Name="dbo.SP_SelectPrerequisitesPermission" Method="SP_SelectPrerequisitesPermission">

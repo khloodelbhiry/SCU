@@ -29,8 +29,7 @@ public partial class docs_indexing : System.Web.UI.Page
                 ViewState["_dtKeyword"] = value;
                 if (((DataTable)ViewState["_dtKeyword"]).Columns.Count == 0)
                 {
-                    ((DataTable)ViewState["_dtKeyword"]).Columns.Add("id", typeof(int))
-                        .AutoIncrement = true;
+                    ((DataTable)ViewState["_dtKeyword"]).Columns.Add("id", typeof(int));
                     ((DataTable)ViewState["_dtKeyword"]).Columns.Add("name");
                 }
             }
@@ -166,7 +165,7 @@ public partial class docs_indexing : System.Web.UI.Page
             ddlReceivingParty.Items.Insert(0, new ListItem("-- اختر --", "0"));
 
             var query4 = from q in db.BusinessReferences
-                         where q.statusId==(int)StatusEnum.Approved
+                         where q.statusId == (int)StatusEnum.Approved
                          select new
                          {
                              q.id,
@@ -178,23 +177,14 @@ public partial class docs_indexing : System.Web.UI.Page
             ddlReference.DataBind();
             ddlReference.Items.Insert(0, new ListItem("-- اختر --", "0"));
 
-            var query5 = (from q in db.FileDocumentKeywords
+            var query5 = (from q in db.Keywords
                           select new
                           {
-                              q.keyword
-                          }).Distinct();
-
-            DataTable dt = new DataTable();
-            dt.Columns.Add("id");
-            dt.Columns.Add("keyword");
-            int count = 1;
-            foreach (var i in query5)
-            {
-                dt.Rows.Add(count, i.keyword);
-                count++;
-            }
-            ddlKeywords.DataSource = dt;
-            ddlKeywords.DataTextField = "keyword";
+                              q.id,
+                              q.name
+                          });
+            ddlKeywords.DataSource = query5;
+            ddlKeywords.DataTextField = "name";
             ddlKeywords.DataValueField = "id";
             ddlKeywords.DataBind();
             ddlKeywords.Items.Insert(0, new ListItem("-- اختر --", "0"));
@@ -224,7 +214,7 @@ public partial class docs_indexing : System.Web.UI.Page
                     {
                         FileDocumentKeyword k = new FileDocumentKeyword();
                         k.fileDocumentId = q.id;
-                        k.keyword = DtKeyword.Rows[i]["name"].ToString();
+                        k.keywordId = int.Parse(DtKeyword.Rows[i]["id"].ToString());
                         db.FileDocumentKeywords.InsertOnSubmit(k);
                     }
                     for (int i = 0; i < DtReference.Rows.Count; i++)
@@ -475,7 +465,7 @@ public partial class docs_indexing : System.Web.UI.Page
 
     protected void btnDeleteKeyword_Command(object sender, CommandEventArgs e)
     {
-        var rows = DtKeyword.Select("id = " + int.Parse(e.CommandArgument.ToString()) + "");
+        var rows = DtKeyword.Select("id = " + int.Parse(e.CommandArgument.ToString()));
         foreach (var row in rows)
             row.Delete();
         DtKeyword.AcceptChanges();
@@ -490,14 +480,6 @@ public partial class docs_indexing : System.Web.UI.Page
         ddlReference.SelectedValue = "0";
         gdvReferences.DataSource = DtReference;
         gdvReferences.DataBind();
-    }
-
-    protected void btnAddKeyword_Click(object sender, EventArgs e)
-    {
-        DtKeyword.Rows.Add(null, txtKeyword.Text);
-        txtKeyword.Text = string.Empty;
-        gdvKeywords.DataSource = DtKeyword;
-        gdvKeywords.DataBind();
     }
 
     protected void btnDeleteReference_Command(object sender, CommandEventArgs e)
@@ -555,28 +537,43 @@ public partial class docs_indexing : System.Web.UI.Page
         var rows = DtKeyword.Select("name = '" + txtKeyword.Text + "'");
         if (rows != null && rows.Count() > 0)
         {
+            txtKeyword.Text = string.Empty;
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Startup", "<script language='javascript'> alert('موجوده من قبل');</script>", false);
             return;
         }
-        DtKeyword.Rows.Add(null, txtKeyword.Text);
-        ddlKeywords.Items.Insert(ddlKeywords.Items.Count, new ListItem(txtKeyword.Text, ddlKeywords.Items.Count.ToString()));
-        txtKeyword.Text = string.Empty;
-        gdvKeywords.DataSource = DtKeyword;
-        gdvKeywords.DataBind();
+        using (SCU_OneTrackDataContext db = new SCU_OneTrackDataContext())
+        {
+            Keyword keyword = db.Keywords.FirstOrDefault(x => x.name == txtKeyword.Text.Trim());
+            if (keyword == null)
+            {
+                Keyword k = new Keyword();
+                k.name = txtKeyword.Text.Trim();
+                db.Keywords.InsertOnSubmit(k);
+                db.SubmitChanges();
+                ddlKeywords.Items.Insert(ddlKeywords.Items.Count, new ListItem(txtKeyword.Text.Trim(), k.id.ToString()));
+                DtKeyword.Rows.Add(k.id, txtKeyword.Text);
+            }
+            else
+                DtKeyword.Rows.Add(keyword.id, txtKeyword.Text);
+            txtKeyword.Text = string.Empty;
+            gdvKeywords.DataSource = DtKeyword;
+            gdvKeywords.DataBind();
+        }
     }
 
     protected void ddlKeywords_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddlKeywords.SelectedValue != "0")
         {
-            var rows = DtKeyword.Select("name = '" + ddlKeywords.SelectedItem.Text + "'");
+            var rows = DtKeyword.Select("id = " + int.Parse(ddlKeywords.SelectedValue));
             if (rows != null && rows.Count() > 0)
             {
                 ddlKeywords.SelectedValue = "0";
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "Startup", "<script language='javascript'> alert('موجوده من قبل');</script>", false);
                 return;
             }
-            DtKeyword.Rows.Add(null, ddlKeywords.SelectedItem.Text); gdvKeywords.DataSource = DtKeyword;
+            DtKeyword.Rows.Add(int.Parse(ddlKeywords.SelectedValue), ddlKeywords.SelectedItem.Text); 
+            gdvKeywords.DataSource = DtKeyword;
             gdvKeywords.DataBind();
             ddlKeywords.SelectedValue = "0";
         }

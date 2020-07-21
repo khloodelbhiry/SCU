@@ -21,7 +21,7 @@ using System.Reflection;
 
 
 
-[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="SCU_OneTrack_6-7")]
+[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="SCU_OneTrack")]
 public partial class SCU_OneTrackDataContext : System.Data.Linq.DataContext
 {
 	
@@ -206,9 +206,6 @@ public partial class SCU_OneTrackDataContext : System.Data.Linq.DataContext
   partial void InsertConsumable(Consumable instance);
   partial void UpdateConsumable(Consumable instance);
   partial void DeleteConsumable(Consumable instance);
-  partial void InsertFileDocumentKeyword(FileDocumentKeyword instance);
-  partial void UpdateFileDocumentKeyword(FileDocumentKeyword instance);
-  partial void DeleteFileDocumentKeyword(FileDocumentKeyword instance);
   partial void InsertFileDocumentReference(FileDocumentReference instance);
   partial void UpdateFileDocumentReference(FileDocumentReference instance);
   partial void DeleteFileDocumentReference(FileDocumentReference instance);
@@ -236,6 +233,12 @@ public partial class SCU_OneTrackDataContext : System.Data.Linq.DataContext
   partial void InsertSetting(Setting instance);
   partial void UpdateSetting(Setting instance);
   partial void DeleteSetting(Setting instance);
+  partial void InsertFileDocumentKeyword(FileDocumentKeyword instance);
+  partial void UpdateFileDocumentKeyword(FileDocumentKeyword instance);
+  partial void DeleteFileDocumentKeyword(FileDocumentKeyword instance);
+  partial void InsertKeyword(Keyword instance);
+  partial void UpdateKeyword(Keyword instance);
+  partial void DeleteKeyword(Keyword instance);
   #endregion
 	
 	public SCU_OneTrackDataContext() : 
@@ -740,14 +743,6 @@ public partial class SCU_OneTrackDataContext : System.Data.Linq.DataContext
 		}
 	}
 	
-	public System.Data.Linq.Table<FileDocumentKeyword> FileDocumentKeywords
-	{
-		get
-		{
-			return this.GetTable<FileDocumentKeyword>();
-		}
-	}
-	
 	public System.Data.Linq.Table<FileDocumentReference> FileDocumentReferences
 	{
 		get
@@ -817,6 +812,22 @@ public partial class SCU_OneTrackDataContext : System.Data.Linq.DataContext
 		get
 		{
 			return this.GetTable<Setting>();
+		}
+	}
+	
+	public System.Data.Linq.Table<FileDocumentKeyword> FileDocumentKeywords
+	{
+		get
+		{
+			return this.GetTable<FileDocumentKeyword>();
+		}
+	}
+	
+	public System.Data.Linq.Table<Keyword> Keywords
+	{
+		get
+		{
+			return this.GetTable<Keyword>();
 		}
 	}
 	
@@ -2824,9 +2835,9 @@ public partial class FileDocument : INotifyPropertyChanging, INotifyPropertyChan
 	
 	private EntitySet<DocumentTransaction> _DocumentTransactions;
 	
-	private EntitySet<FileDocumentKeyword> _FileDocumentKeywords;
-	
 	private EntitySet<FileDocumentReference> _FileDocumentReferences;
+	
+	private EntitySet<FileDocumentKeyword> _FileDocumentKeywords;
 	
 	private EntityRef<BoxFile> _BoxFile;
 	
@@ -2885,8 +2896,8 @@ public partial class FileDocument : INotifyPropertyChanging, INotifyPropertyChan
 	public FileDocument()
 	{
 		this._DocumentTransactions = new EntitySet<DocumentTransaction>(new Action<DocumentTransaction>(this.attach_DocumentTransactions), new Action<DocumentTransaction>(this.detach_DocumentTransactions));
-		this._FileDocumentKeywords = new EntitySet<FileDocumentKeyword>(new Action<FileDocumentKeyword>(this.attach_FileDocumentKeywords), new Action<FileDocumentKeyword>(this.detach_FileDocumentKeywords));
 		this._FileDocumentReferences = new EntitySet<FileDocumentReference>(new Action<FileDocumentReference>(this.attach_FileDocumentReferences), new Action<FileDocumentReference>(this.detach_FileDocumentReferences));
+		this._FileDocumentKeywords = new EntitySet<FileDocumentKeyword>(new Action<FileDocumentKeyword>(this.attach_FileDocumentKeywords), new Action<FileDocumentKeyword>(this.detach_FileDocumentKeywords));
 		this._BoxFile = default(EntityRef<BoxFile>);
 		this._Person = default(EntityRef<Person>);
 		this._Person1 = default(EntityRef<Person>);
@@ -3278,19 +3289,6 @@ public partial class FileDocument : INotifyPropertyChanging, INotifyPropertyChan
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FileDocument_FileDocumentKeyword", Storage="_FileDocumentKeywords", ThisKey="id", OtherKey="fileDocumentId")]
-	public EntitySet<FileDocumentKeyword> FileDocumentKeywords
-	{
-		get
-		{
-			return this._FileDocumentKeywords;
-		}
-		set
-		{
-			this._FileDocumentKeywords.Assign(value);
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FileDocument_FileDocumentReference", Storage="_FileDocumentReferences", ThisKey="id", OtherKey="fileDocumentId")]
 	public EntitySet<FileDocumentReference> FileDocumentReferences
 	{
@@ -3301,6 +3299,19 @@ public partial class FileDocument : INotifyPropertyChanging, INotifyPropertyChan
 		set
 		{
 			this._FileDocumentReferences.Assign(value);
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FileDocument_FileDocumentKeyword", Storage="_FileDocumentKeywords", ThisKey="id", OtherKey="fileDocumentId")]
+	public EntitySet<FileDocumentKeyword> FileDocumentKeywords
+	{
+		get
+		{
+			return this._FileDocumentKeywords;
+		}
+		set
+		{
+			this._FileDocumentKeywords.Assign(value);
 		}
 	}
 	
@@ -3574,18 +3585,6 @@ public partial class FileDocument : INotifyPropertyChanging, INotifyPropertyChan
 		entity.FileDocument = null;
 	}
 	
-	private void attach_FileDocumentKeywords(FileDocumentKeyword entity)
-	{
-		this.SendPropertyChanging();
-		entity.FileDocument = this;
-	}
-	
-	private void detach_FileDocumentKeywords(FileDocumentKeyword entity)
-	{
-		this.SendPropertyChanging();
-		entity.FileDocument = null;
-	}
-	
 	private void attach_FileDocumentReferences(FileDocumentReference entity)
 	{
 		this.SendPropertyChanging();
@@ -3593,6 +3592,18 @@ public partial class FileDocument : INotifyPropertyChanging, INotifyPropertyChan
 	}
 	
 	private void detach_FileDocumentReferences(FileDocumentReference entity)
+	{
+		this.SendPropertyChanging();
+		entity.FileDocument = null;
+	}
+	
+	private void attach_FileDocumentKeywords(FileDocumentKeyword entity)
+	{
+		this.SendPropertyChanging();
+		entity.FileDocument = this;
+	}
+	
+	private void detach_FileDocumentKeywords(FileDocumentKeyword entity)
 	{
 		this.SendPropertyChanging();
 		entity.FileDocument = null;
@@ -18382,157 +18393,6 @@ public partial class Consumable : INotifyPropertyChanging, INotifyPropertyChange
 	}
 }
 
-[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FileDocumentKeywords")]
-public partial class FileDocumentKeyword : INotifyPropertyChanging, INotifyPropertyChanged
-{
-	
-	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-	
-	private int _id;
-	
-	private System.Nullable<int> _fileDocumentId;
-	
-	private string _keyword;
-	
-	private EntityRef<FileDocument> _FileDocument;
-	
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnfileDocumentIdChanging(System.Nullable<int> value);
-    partial void OnfileDocumentIdChanged();
-    partial void OnkeywordChanging(string value);
-    partial void OnkeywordChanged();
-    #endregion
-	
-	public FileDocumentKeyword()
-	{
-		this._FileDocument = default(EntityRef<FileDocument>);
-		OnCreated();
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-	public int id
-	{
-		get
-		{
-			return this._id;
-		}
-		set
-		{
-			if ((this._id != value))
-			{
-				this.OnidChanging(value);
-				this.SendPropertyChanging();
-				this._id = value;
-				this.SendPropertyChanged("id");
-				this.OnidChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fileDocumentId", DbType="Int")]
-	public System.Nullable<int> fileDocumentId
-	{
-		get
-		{
-			return this._fileDocumentId;
-		}
-		set
-		{
-			if ((this._fileDocumentId != value))
-			{
-				if (this._FileDocument.HasLoadedOrAssignedValue)
-				{
-					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-				}
-				this.OnfileDocumentIdChanging(value);
-				this.SendPropertyChanging();
-				this._fileDocumentId = value;
-				this.SendPropertyChanged("fileDocumentId");
-				this.OnfileDocumentIdChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_keyword", DbType="NVarChar(500)")]
-	public string keyword
-	{
-		get
-		{
-			return this._keyword;
-		}
-		set
-		{
-			if ((this._keyword != value))
-			{
-				this.OnkeywordChanging(value);
-				this.SendPropertyChanging();
-				this._keyword = value;
-				this.SendPropertyChanged("keyword");
-				this.OnkeywordChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FileDocument_FileDocumentKeyword", Storage="_FileDocument", ThisKey="fileDocumentId", OtherKey="id", IsForeignKey=true)]
-	public FileDocument FileDocument
-	{
-		get
-		{
-			return this._FileDocument.Entity;
-		}
-		set
-		{
-			FileDocument previousValue = this._FileDocument.Entity;
-			if (((previousValue != value) 
-						|| (this._FileDocument.HasLoadedOrAssignedValue == false)))
-			{
-				this.SendPropertyChanging();
-				if ((previousValue != null))
-				{
-					this._FileDocument.Entity = null;
-					previousValue.FileDocumentKeywords.Remove(this);
-				}
-				this._FileDocument.Entity = value;
-				if ((value != null))
-				{
-					value.FileDocumentKeywords.Add(this);
-					this._fileDocumentId = value.id;
-				}
-				else
-				{
-					this._fileDocumentId = default(Nullable<int>);
-				}
-				this.SendPropertyChanged("FileDocument");
-			}
-		}
-	}
-	
-	public event PropertyChangingEventHandler PropertyChanging;
-	
-	public event PropertyChangedEventHandler PropertyChanged;
-	
-	protected virtual void SendPropertyChanging()
-	{
-		if ((this.PropertyChanging != null))
-		{
-			this.PropertyChanging(this, emptyChangingEventArgs);
-		}
-	}
-	
-	protected virtual void SendPropertyChanged(String propertyName)
-	{
-		if ((this.PropertyChanged != null))
-		{
-			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
-	}
-}
-
 [global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FileDocumentReferences")]
 public partial class FileDocumentReference : INotifyPropertyChanging, INotifyPropertyChanged
 {
@@ -21432,6 +21292,336 @@ public partial class Setting : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 		}
+	}
+}
+
+[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FileDocumentKeywords")]
+public partial class FileDocumentKeyword : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _id;
+	
+	private System.Nullable<int> _fileDocumentId;
+	
+	private string _keyword;
+	
+	private System.Nullable<int> _keywordId;
+	
+	private EntityRef<FileDocument> _FileDocument;
+	
+	private EntityRef<Keyword> _Keyword1;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnfileDocumentIdChanging(System.Nullable<int> value);
+    partial void OnfileDocumentIdChanged();
+    partial void OnkeywordChanging(string value);
+    partial void OnkeywordChanged();
+    partial void OnkeywordIdChanging(System.Nullable<int> value);
+    partial void OnkeywordIdChanged();
+    #endregion
+	
+	public FileDocumentKeyword()
+	{
+		this._FileDocument = default(EntityRef<FileDocument>);
+		this._Keyword1 = default(EntityRef<Keyword>);
+		OnCreated();
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public int id
+	{
+		get
+		{
+			return this._id;
+		}
+		set
+		{
+			if ((this._id != value))
+			{
+				this.OnidChanging(value);
+				this.SendPropertyChanging();
+				this._id = value;
+				this.SendPropertyChanged("id");
+				this.OnidChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fileDocumentId", DbType="Int")]
+	public System.Nullable<int> fileDocumentId
+	{
+		get
+		{
+			return this._fileDocumentId;
+		}
+		set
+		{
+			if ((this._fileDocumentId != value))
+			{
+				if (this._FileDocument.HasLoadedOrAssignedValue)
+				{
+					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+				}
+				this.OnfileDocumentIdChanging(value);
+				this.SendPropertyChanging();
+				this._fileDocumentId = value;
+				this.SendPropertyChanged("fileDocumentId");
+				this.OnfileDocumentIdChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_keyword", DbType="NVarChar(500)")]
+	public string keyword
+	{
+		get
+		{
+			return this._keyword;
+		}
+		set
+		{
+			if ((this._keyword != value))
+			{
+				this.OnkeywordChanging(value);
+				this.SendPropertyChanging();
+				this._keyword = value;
+				this.SendPropertyChanged("keyword");
+				this.OnkeywordChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_keywordId", DbType="Int")]
+	public System.Nullable<int> keywordId
+	{
+		get
+		{
+			return this._keywordId;
+		}
+		set
+		{
+			if ((this._keywordId != value))
+			{
+				if (this._Keyword1.HasLoadedOrAssignedValue)
+				{
+					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+				}
+				this.OnkeywordIdChanging(value);
+				this.SendPropertyChanging();
+				this._keywordId = value;
+				this.SendPropertyChanged("keywordId");
+				this.OnkeywordIdChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FileDocument_FileDocumentKeyword", Storage="_FileDocument", ThisKey="fileDocumentId", OtherKey="id", IsForeignKey=true)]
+	public FileDocument FileDocument
+	{
+		get
+		{
+			return this._FileDocument.Entity;
+		}
+		set
+		{
+			FileDocument previousValue = this._FileDocument.Entity;
+			if (((previousValue != value) 
+						|| (this._FileDocument.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._FileDocument.Entity = null;
+					previousValue.FileDocumentKeywords.Remove(this);
+				}
+				this._FileDocument.Entity = value;
+				if ((value != null))
+				{
+					value.FileDocumentKeywords.Add(this);
+					this._fileDocumentId = value.id;
+				}
+				else
+				{
+					this._fileDocumentId = default(Nullable<int>);
+				}
+				this.SendPropertyChanged("FileDocument");
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Keyword_FileDocumentKeyword", Storage="_Keyword1", ThisKey="keywordId", OtherKey="id", IsForeignKey=true)]
+	public Keyword Keyword1
+	{
+		get
+		{
+			return this._Keyword1.Entity;
+		}
+		set
+		{
+			Keyword previousValue = this._Keyword1.Entity;
+			if (((previousValue != value) 
+						|| (this._Keyword1.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Keyword1.Entity = null;
+					previousValue.FileDocumentKeywords.Remove(this);
+				}
+				this._Keyword1.Entity = value;
+				if ((value != null))
+				{
+					value.FileDocumentKeywords.Add(this);
+					this._keywordId = value.id;
+				}
+				else
+				{
+					this._keywordId = default(Nullable<int>);
+				}
+				this.SendPropertyChanged("Keyword1");
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Keywords")]
+public partial class Keyword : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _id;
+	
+	private string _name;
+	
+	private EntitySet<FileDocumentKeyword> _FileDocumentKeywords;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    #endregion
+	
+	public Keyword()
+	{
+		this._FileDocumentKeywords = new EntitySet<FileDocumentKeyword>(new Action<FileDocumentKeyword>(this.attach_FileDocumentKeywords), new Action<FileDocumentKeyword>(this.detach_FileDocumentKeywords));
+		OnCreated();
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public int id
+	{
+		get
+		{
+			return this._id;
+		}
+		set
+		{
+			if ((this._id != value))
+			{
+				this.OnidChanging(value);
+				this.SendPropertyChanging();
+				this._id = value;
+				this.SendPropertyChanged("id");
+				this.OnidChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(1000) NOT NULL", CanBeNull=false)]
+	public string name
+	{
+		get
+		{
+			return this._name;
+		}
+		set
+		{
+			if ((this._name != value))
+			{
+				this.OnnameChanging(value);
+				this.SendPropertyChanging();
+				this._name = value;
+				this.SendPropertyChanged("name");
+				this.OnnameChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Keyword_FileDocumentKeyword", Storage="_FileDocumentKeywords", ThisKey="id", OtherKey="keywordId")]
+	public EntitySet<FileDocumentKeyword> FileDocumentKeywords
+	{
+		get
+		{
+			return this._FileDocumentKeywords;
+		}
+		set
+		{
+			this._FileDocumentKeywords.Assign(value);
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+	
+	private void attach_FileDocumentKeywords(FileDocumentKeyword entity)
+	{
+		this.SendPropertyChanging();
+		entity.Keyword1 = this;
+	}
+	
+	private void detach_FileDocumentKeywords(FileDocumentKeyword entity)
+	{
+		this.SendPropertyChanging();
+		entity.Keyword1 = null;
 	}
 }
 
